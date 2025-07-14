@@ -1,5 +1,10 @@
 import React, { useState, FormEvent, ChangeEvent } from "react";
-// import "../App.css";
+import "../App.css";
+
+// TODO: Andrew add login form
+// references used:
+// https://dev.to/luqmanshaban/creating-a-sign-up-form-in-react-with-typescript-2jb3
+// https://www.youtube.com/watch?v=j4Ms4CSDR60&ab_channel=CodingPartner 
 
 interface LoginData {
   email: string;
