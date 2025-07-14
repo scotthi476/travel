@@ -33,14 +33,13 @@ const RegistrationForm = () => {
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        console.log("Regisrtation data:", formData)
+        console.log("Registration data:", formData)
         // call registration api backend 
     }
 
     // socials authenticator?
 
     
-    return <div>Registration</div>
     return (
         <div>
             <h2>Create an Account</h2>
@@ -73,7 +72,7 @@ const RegistrationForm = () => {
                 />
                 <label htmlFor = "email">Email</label>
                 <input
-                    type = "text"
+                    type = "email"
                     name = "email"
                     id = "email"
                     value = {formData.email}
