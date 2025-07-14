@@ -24,31 +24,15 @@ const RegistrationForm = () => {
         password: '',
         confirmPassword: '',
     })
-    const [errors, setErrors] = useState<Partial<Record<keyof RegistrationData, string>>>({})
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target
         setFormData(prevData => ({...prevData, [name]: value}))
     }
 
-    // registration form validation check
-    const validate = (): boolean => {
-        const newErrors: typeof errors = {}
-        if (!formData.username.trim()) newErrors.username = 'Username is required'
-        if (!formData.firstname.trim()) newErrors.firstname = 'First name is required'
-        if (!formData.lastname.trim()) newErrors.lastname = 'Last name is required'
-        if (!formData.email) newErrors.email = 'Email is required'
-        else if (!/^[\w.-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(formData.email)) newErrors.email = 'Email is invalid'
-        if (formData.password.length < 8) newErrors.password = 'Password must be at least 8 characters'
-        if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = "Passwords don't match"
-
-        setErrors(newErrors)
-        return Object.keys(newErrors).length === 0
-    }
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        if (!validate()) return;
         console.log("Regisrtation data:", formData)
         // call registration api backend 
     }

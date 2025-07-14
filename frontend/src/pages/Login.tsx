@@ -16,26 +16,15 @@ const Login = () => {
         email: '',
         pasword: '',
     })
-    const [errors, setErrors] = useState<Partial<Record<keyof LoginData, string>>>({})
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target
         setFormData(prevData => ({...prevData, [name]: value}))
     }
 
-    //validation
-    const validate = (): boolean => {
-        const newErrors: typeof errors = {};
-        if (!formData.email) newErrors.email = "Email is required"
-        else if (!/^[\w.-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(formData.email)) newErrors.email = "Email is invalid"
-        if (!formData.password) newErrors.password = "Password is required"
-        setErrors(newErrors)
-        return Object.keys(newErrors.length === 0)
-    }
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault()
-        if (!validate()) return;
         console.log('Lgin data: ', formData)
         // integrate with backened api for login
     }
