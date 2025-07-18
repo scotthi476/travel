@@ -50,3 +50,11 @@ CREATE OR REPLACE TABLE TripExperiences (
     FOREIGN KEY (tripID) REFERENCES Trips(tripID) ON DELETE CASCADE,
     FOREIGN KEY (experienceID) REFERENCES Experiences(experienceID) ON DELETE CASCADE
 );
+
+DROP TABLE IF EXISTS Ratings;
+
+CREATE OR REPLACE TABLE Ratings (
+    ratingID int unique AUTO_INCREMENT,
+    rating int,
+    PRIMARY KEY (ratingID)
+);
