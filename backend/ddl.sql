@@ -31,12 +31,12 @@ CREATE OR REPLACE TABLE Experiences (
     experienceID int unique AUTO_INCREMENT,
     title varchar(255) NOT NULL,
     expDescription varchar(255) NOT NULL,
-    expDate date NOT NULL,
+    expDate date,
     imageURL varchar(255) NOT NULL,
-    latitude int NOT NULL,
-    longitude int NOT NULL,
+    latitude decimal NOT NULL,
+    longitude decimal NOT NULL,
     rating int,
-    keyword varchar(255),
+    keyword varchar(255)[],
     PRIMARY KEY (experienceID)
 );
 

@@ -1,9 +1,14 @@
 -- This file contains the SQL queries to be used in the web app
 
 -- Experience Queries
+-- This query displays all experiences
+SELECT title, expDescription, expDate, imageURL, latitude, longitude, rating, keyword
+FROM Experiences
+
 -- This query displays an experience
 SELECT title, expDescription, expDate, imageURL, latitude, longitude, rating, keyword
 FROM Experiences
+WHERE experienceID = :rowSelectedFromTable
 
 -- This query inserts an experience 
 INSERT INTO Experiences(title, expDescription, expDate, imageURL, latitude, longitude, rating, keyword)
