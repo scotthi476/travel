@@ -1,5 +1,8 @@
+import type { Experience } from "./experience"
+import type { User } from "./user"
+
 export interface Rating {
-    experienceId: string
-    userId: string
+    experience: Experience
+    user: User
     rating: number
 }
