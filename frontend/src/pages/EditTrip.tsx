@@ -17,7 +17,7 @@ const [userId, _setUserId] = useState("");
 
 const { onCancelBtnClickHnd, onUpdateClickHnd} = props;
 
-const onTitleChangeHnd = (React.ChangeEvent<HTMLInputElement>) => {
+const onTitleChangeHnd = (e: React.ChangeEvent<HTMLInputElement>) => {
   setTitle(e.target.value)
 }
 
