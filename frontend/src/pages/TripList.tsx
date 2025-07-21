@@ -4,10 +4,11 @@ import type { Trip } from "../types"
 type Props = {
     _list: Trip[];
     onDeleteClickHnd: (data: Trip) => void
+    onEdit: (data: Trip) => void
 }
 
 const TripList = (props: Props) => {
-    const { _list, onDeleteClickHnd } = props
+    const { _list, onDeleteClickHnd, onEdit } = props
     return (
         <div>
             <br />
@@ -23,7 +24,7 @@ const TripList = (props: Props) => {
                             <td>{t.title}</td>
                             <td>
                                 <div>
-                                    <input type="button" value="Update" />
+                                    <input type="button" value="Edit" onClick={()=> onEdit(t)} />
                                     &nbsp;
                                     <input type="button" value="Delete" onClick={() => onDeleteClickHnd(t)} />
                                 </div>

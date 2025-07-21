@@ -6,7 +6,7 @@ import { mockExperiences } from "../assets/experiences";
 
 type Props = {
   onCancelBtnClickHnd: () => void;
-  onSubmitClickHnd: (data: Trip) => void
+  onSubmitHnd: (data: Trip) => void
 };
 
 const AddTrip = (props: Props) => {
@@ -15,14 +15,14 @@ const [title, setTitle] = useState("");
 const [id, setId] = useState("");
 const [userId, setUserId] = useState("");
 
-const { onCancelBtnClickHnd, onSubmitClickHnd} = props;
+const { onCancelBtnClickHnd, onSubmitHnd} = props;
 
 const onTitleChangeHnd = (e: any) => {
   setTitle(e.target.value)
 }
 
 
-const onSubmitBtnClickHnd = (e: any) => {
+const onAddBtnClickHnd = (e: any) => {
   e.preventDefault();
   const data: Trip = {
     id: id,
@@ -30,14 +30,14 @@ const onSubmitBtnClickHnd = (e: any) => {
     title: title,
     experiences: mockExperiences
   }
-  onSubmitClickHnd(data);
+  onSubmitHnd(data);
   onCancelBtnClickHnd();
 
 }
 
   return (
   <>
-    <form onSubmit={onSubmitBtnClickHnd}>
+    <form onSubmit={onAddBtnClickHnd}>
       <div>
         <label>Title: </label>
         <input style={{ width: '300px' }} type = "text"  name="title" id="title" value={title} onChange={onTitleChangeHnd} required />

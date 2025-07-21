@@ -6,6 +6,7 @@ import "./TripList.tsx"
 import TripList from "./TripList.tsx"
 import "./AddTrip.tsx"
 import AddTrip from "./AddTrip.tsx"
+import EditTrip from "./EditTrip.tsx"
 
 // TODO: Hisami add form for CRUD operation
 //Reference : https://www.youtube.com/watch?v=R1uTPIOuT8s React Simple CRUD Application
@@ -13,7 +14,8 @@ import AddTrip from "./AddTrip.tsx"
 const MyTrips = () => {
     const [tripList, _setTripList] = useState(mockTripList as Trip[])
 
-    const [displayPage, setDisplayPage] = useState("list")
+    const [displayPage, setDisplayPage] = useState("list");
+    const [dataToEdit, setDataToEdit] = useState({} as null| Trip);
 
     const onAddTripClickHnd = () => {
         setDisplayPage("add")
@@ -35,6 +37,19 @@ const MyTrips = () => {
       _setTripList(tempList);      
     }
 
+    const editEmployeeData = (data: Trip) =>{
+        setDisplayPage("edit");
+        setDataToEdit(data);
+    }
+
+    const updateData = (data: Trip) => {
+       const filteredData = tripList.filter(x => x.id === data.id)[0];
+       const indexOfRecord = tripList.indexOf(filteredData);
+       const tempdata = [...tripList] 
+       tempdata[indexOfRecord] = data;
+       _setTripList(tempdata);
+    }
+
     return (
         <>
             <div>
@@ -50,12 +65,13 @@ const MyTrips = () => {
                             value="Add Trip"
                             onClick={onAddTripClickHnd}
                         />
-                        <TripList _list={tripList} onDeleteClickHnd={deleteTrip}/>
+                        <TripList _list={tripList} onDeleteClickHnd={deleteTrip} onEdit={editEmployeeData}/>
                     </>
                 )}
                 {displayPage === "add" && (
-                    <AddTrip onCancelBtnClickHnd={showListPage} onSubmitClickHnd={addTrip} />
+                    <AddTrip onCancelBtnClickHnd={showListPage} onSubmitHnd={addTrip} />
                 )}
+                {displayPage === "edit" && <EditTrip  onCancelBtnClickHnd={showListPage} onUpdateClickHnd={updateData}/>}
             </section>
         </>
     )
