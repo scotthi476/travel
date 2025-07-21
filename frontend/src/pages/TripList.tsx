@@ -1,21 +1,23 @@
-import { mockTripList } from "../assets/trips"
+
 import type { Trip } from "../types"
 
 type Props = {
-    _list: Trip[]
+    _list: Trip[];
+    onDeleteClickHnd: (data: Trip) => void
 }
 
 const TripList = (props: Props) => {
-    const { _list } = props
+    const { _list, onDeleteClickHnd } = props
     return (
         <div>
             <br />
             <table>
+              <tbody>
                 <tr>
                     <th> Title</th>
                     <th> Actions </th>
                 </tr>
-                {mockTripList.map((t) => {
+                { _list.map((t) => {
                     return (
                         <tr key={t.id}>
                             <td>{t.title}</td>
@@ -23,12 +25,13 @@ const TripList = (props: Props) => {
                                 <div>
                                     <input type="button" value="Update" />
                                     &nbsp;
-                                    <input type="button" value="Delete" />
+                                    <input type="button" value="Delete" onClick={() => onDeleteClickHnd(t)} />
                                 </div>
                             </td>
                         </tr>
                     )
                 })}
+              </tbody>  
             </table>
         </div>
     )

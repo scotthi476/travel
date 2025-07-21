@@ -1,9 +1,9 @@
 import { useState } from "react"
 import "./MyTrips.css"
 import type { Trip } from "../types"
-import { mockTripList } from "../assets/trips"
-import "./TripList"
-import TripList from "./TripList"
+import { mockTripList } from "../assets/trips.ts"
+import "./TripList.tsx"
+import TripList from "./TripList.tsx"
 import "./AddTrip.tsx"
 import AddTrip from "./AddTrip.tsx"
 
@@ -23,6 +23,18 @@ const MyTrips = () => {
         setDisplayPage("list")
     }
 
+    const addTrip = (data: Trip) => {
+       _setTripList([...tripList, data]);
+    }
+
+    const deleteTrip = (data: Trip) =>{
+      const indexToDelete = tripList.indexOf(data);
+      const tempList = [...tripList]
+
+      tempList.splice(indexToDelete,1);
+      _setTripList(tempList);      
+    }
+
     return (
         <>
             <div>
@@ -38,11 +50,11 @@ const MyTrips = () => {
                             value="Add Trip"
                             onClick={onAddTripClickHnd}
                         />
-                        <TripList _list={tripList} />
+                        <TripList _list={tripList} onDeleteClickHnd={deleteTrip}/>
                     </>
                 )}
                 {displayPage === "add" && (
-                    <AddTrip onCancelBtnClickHnd={showListPage} />
+                    <AddTrip onCancelBtnClickHnd={showListPage} onSubmitClickHnd={addTrip} />
                 )}
             </section>
         </>

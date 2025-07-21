@@ -1,5 +1,6 @@
 import type { Experience } from "./experience"
 
+
 export interface Trip {
     id: string
     title: string
