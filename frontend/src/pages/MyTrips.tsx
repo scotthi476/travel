@@ -1,5 +1,4 @@
 import { useState } from "react"
-import "./MyTrips.css"
 import type { Trip } from "../types"
 import { mockTripList } from "../assets/trips.ts"
 import "./TripList.tsx"
@@ -7,6 +6,7 @@ import TripList from "./TripList.tsx"
 import "./AddTrip.tsx"
 import AddTrip from "./AddTrip.tsx"
 import EditTrip from "./EditTrip.tsx"
+import "../App.css"
 
 // TODO: Hisami add form for CRUD operation
 //Reference : https://www.youtube.com/watch?v=R1uTPIOuT8s React Simple CRUD Application

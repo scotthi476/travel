@@ -1,8 +1,8 @@
 //Reference: https://www.youtube.com/watch?v=R1uTPIOuT8s  React simple CRUD Application
 
-import { useId, useState } from "react";
 import type { Trip } from "../types"
 import { mockExperiences } from "../assets/experiences";
+import { useState } from "react";
 
 type Props = {
   onCancelBtnClickHnd: () => void;
@@ -21,7 +21,6 @@ const onTitleChangeHnd = (e: any) => {
   setTitle(e.target.value)
 }
 
-
 const onAddBtnClickHnd = (e: any) => {
   e.preventDefault();
   const data: Trip = {
@@ -32,7 +31,6 @@ const onAddBtnClickHnd = (e: any) => {
   }
   onSubmitHnd(data);
   onCancelBtnClickHnd();
-
 }
 
   return (

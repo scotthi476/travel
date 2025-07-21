@@ -10,8 +10,7 @@ type Props = {
 };
 
 const EditTrip = (props: Props) => {
-   //const {data} = props
-
+ 
 const [title, setTitle] = useState("");
 const [id, setId] = useState("");
 const [userId, setUserId] = useState("");
@@ -33,7 +32,6 @@ const onEditBtnClickHnd = (e: any) => {
   }
   onUpdateClickHnd(updatedData);
   onCancelBtnClickHnd();
-
 }
 
   return (
