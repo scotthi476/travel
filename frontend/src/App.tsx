@@ -8,9 +8,9 @@ import MyTrips from "./pages/MyTrips"
 import Experience from "./pages/Experience"
 import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./router/ProtectedRoute"
-import { UserProvider } from "./context/UserContext"
-import { TripProvider } from "./context/TripContext"
-import { ExperienceProvider } from "./context/ExperienceContext"
+import { ExperienceProvider } from "./context/ExperienceProvider"
+import { TripProvider } from "./context/TripProvider"
+import { UserProvider } from "./context/UserProvider"
 
 function App() {
     return (

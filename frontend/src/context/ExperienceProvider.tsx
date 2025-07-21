@@ -1,30 +1,6 @@
-import {
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-    type ReactNode,
-} from "react"
+import { useContext, useEffect, useState, type ReactNode } from "react"
 import type { Experience } from "../types"
-
-interface ExperienceContextType {
-    experiences: Experience[]
-    fetchExperiences: () => Promise<void>
-    addExperience: (exp: Experience) => void
-    updateExperience: (exp: Experience) => void
-    deleteExperience: (id: string) => void
-}
-
-const defaultContext: ExperienceContextType = {
-    experiences: [],
-    fetchExperiences: async () => {},
-    addExperience: () => {},
-    updateExperience: () => {},
-    deleteExperience: () => {},
-}
-
-export const ExperienceContext =
-    createContext<ExperienceContextType>(defaultContext)
+import { ExperienceContext } from "./ExperienceContext"
 
 export const ExperienceProvider = ({ children }: { children: ReactNode }) => {
     const [experiences, setExperiences] = useState<Experience[]>([])

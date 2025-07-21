@@ -1,29 +1,6 @@
-import {
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-    type ReactNode,
-} from "react"
+import { useContext, useEffect, useState, type ReactNode } from "react"
 import type { Trip } from "../types"
-
-interface TripContextType {
-    trips: Trip[]
-    fetchTrips: () => Promise<void>
-    addTrip: (trip: Trip) => void
-    updateTrip: (trip: Trip) => void
-    deleteTrip: (id: string) => void
-}
-
-const defaultContext: TripContextType = {
-    trips: [],
-    fetchTrips: async () => {},
-    addTrip: () => {},
-    updateTrip: () => {},
-    deleteTrip: () => {},
-}
-
-export const TripContext = createContext<TripContextType>(defaultContext)
+import { TripContext } from "./TripContext"
 
 export const TripProvider = ({ children }: { children: ReactNode }) => {
     const [trips, setTrips] = useState<Trip[]>([])

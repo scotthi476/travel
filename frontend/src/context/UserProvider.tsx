@@ -1,25 +1,6 @@
-import {
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-    type ReactNode,
-} from "react"
+import { useContext, useState, type ReactNode } from "react"
 import type { User } from "../types"
-
-interface UserContextType {
-    user: User | null
-    login: (user: User) => void
-    logout: () => void
-}
-
-const defaultContext: UserContextType = {
-    user: null,
-    login: () => {},
-    logout: () => {},
-}
-
-export const UserContext = createContext<UserContextType>(defaultContext)
+import { UserContext } from "./UserContext"
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null)
