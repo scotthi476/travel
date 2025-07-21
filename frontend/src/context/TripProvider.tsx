@@ -49,5 +49,3 @@ export const TripProvider = ({ children }: { children: ReactNode }) => {
         </TripContext.Provider>
     )
 }
-
-export const useTripContext = () => useContext(TripContext)

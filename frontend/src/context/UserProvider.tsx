@@ -21,5 +21,3 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         </UserContext.Provider>
     )
 }
-
-export const useUserContext = () => useContext(UserContext)

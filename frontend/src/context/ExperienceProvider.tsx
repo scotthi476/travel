@@ -49,5 +49,3 @@ export const ExperienceProvider = ({ children }: { children: ReactNode }) => {
         </ExperienceContext.Provider>
     )
 }
-
-export const useExperienceContext = () => useContext(ExperienceContext)
