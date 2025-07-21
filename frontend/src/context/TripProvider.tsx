@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, type ReactNode } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import type { Trip } from "../types"
 import { TripContext } from "./TripContext"
 
