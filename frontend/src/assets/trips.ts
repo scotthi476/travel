@@ -38,4 +38,4 @@ export const mockTripList : Trip[] = [
     userId: "user1",
     experiences: mockExperiences
     } 
-]
+] 
