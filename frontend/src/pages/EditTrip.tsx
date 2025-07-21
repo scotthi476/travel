@@ -12,17 +12,17 @@ type Props = {
 const EditTrip = (props: Props) => {
  
 const [title, setTitle] = useState("");
-const [id, setId] = useState("");
-const [userId, setUserId] = useState("");
+const [id, _setId] = useState("");
+const [userId, _setUserId] = useState("");
 
 const { onCancelBtnClickHnd, onUpdateClickHnd} = props;
 
-const onTitleChangeHnd = (e: any) => {
+const onTitleChangeHnd = (React.ChangeEvent<HTMLInputElement>) => {
   setTitle(e.target.value)
 }
 
 
-const onEditBtnClickHnd = (e: any) => {
+const onEditBtnClickHnd = (e: React.MouseEvent<HTMLFormElement>) => {
   e.preventDefault();
   const updatedData: Trip = {
     id: id,
