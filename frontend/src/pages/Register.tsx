@@ -60,8 +60,8 @@ const RegistrationForm = () => {
     }
 
     const validateAll = (): boolean => {
-        const newErrors: Partial<Record<keyof RegistrationData, string>> = {}
-        (Object.keys(formData) as (keyof RegistrationData)[]).forEach((field) => {
+        const newErrors: Partial<Record<keyof RegistrationData, string>> = {}(
+        Object.keys(formData) as (keyof RegistrationData)[]).forEach((field) => {
             const errorMsg = validateField(field, formData[field])
             if (errorMsg) newErrors[field] = errorMsg
         })

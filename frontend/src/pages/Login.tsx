@@ -40,8 +40,8 @@ const Login = () => {
 
   //form input validation
   const validateAll = (): boolean => {
-    const newErrors: Partial<Record<keyof LoginData, string>> = {}
-    (Object.keys(formData) as (keyof LoginData)[]).forEach((field) => {
+    const newErrors: Partial<Record<keyof LoginData, string>> = {}(
+    Object.keys(formData) as (keyof LoginData)[]).forEach((field) => {
       const error = validateField(field, formData[field])
       if (error) newErrors[field] = error
     })
