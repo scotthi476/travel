@@ -1,13 +1,18 @@
-import type { Keyword } from "./keyword"
+import type { Trip } from "./trip"
+import type { User } from "./user"
 
 export interface Experience {
     id: string
     title: string
     description: string
     imageUrl: string
+    date?: Date // optional
+    rating?: number // optional
     latitude: number
     longitude: number
-    createdBy: string // user ID
-    keywords?: Keyword[] // optional
+    user: User
+    isPublic: boolean
+    trips?: Trip[] // optional
+    keywords?: string[] // optional
     ratingAverage?: number // optional
 }

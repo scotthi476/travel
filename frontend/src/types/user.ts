@@ -1,5 +1,6 @@
 export interface User {
     id: string
     username: string
-    authMethod: "google"
+    isLoggedIn: boolean
+    authMethod: "google" | "email" | "guest"
 }

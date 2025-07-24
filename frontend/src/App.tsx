@@ -8,27 +8,39 @@ import MyTrips from "./pages/MyTrips"
 import Experience from "./pages/Experience"
 import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./router/ProtectedRoute"
+import { ExperienceProvider } from "./context/ExperienceProvider"
+import { TripProvider } from "./context/TripProvider"
+import { UserProvider } from "./context/UserProvider"
 
 function App() {
     return (
         <>
-            <Routes>
-                <Route path="/" element={<Layout />}>
-                    <Route index element={<Home />} />
-                    <Route path="login" element={<Login />} />
-                    <Route path="register" element={<Register />} />
-                    <Route path="experience" element={<Experience />} />
-                    <Route
-                        path="my-trips"
-                        element={
-                            <ProtectedRoute>
-                                <MyTrips />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route path="*" element={<NotFound />} />
-                </Route>
-            </Routes>
+            <UserProvider>
+                <TripProvider>
+                    <ExperienceProvider>
+                        <Routes>
+                            <Route path="/" element={<Layout />}>
+                                <Route index element={<Home />} />
+                                <Route path="login" element={<Login />} />
+                                <Route path="register" element={<Register />} />
+                                <Route
+                                    path="experience"
+                                    element={<Experience />}
+                                />
+                                <Route
+                                    path="my-trips"
+                                    element={
+                                        <ProtectedRoute>
+                                            <MyTrips />
+                                        </ProtectedRoute>
+                                    }
+                                />
+                                <Route path="*" element={<NotFound />} />
+                            </Route>
+                        </Routes>
+                    </ExperienceProvider>
+                </TripProvider>
+            </UserProvider>
         </>
     )
 }
