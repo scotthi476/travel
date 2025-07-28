@@ -3,6 +3,7 @@ import ExperienceGrid from "../features/experience/ExperienceGrid"
 import FilterSidebar from "../features/filters/FilterSidebar"
 import { useExperienceContext } from "../hooks/useExperienceContext"
 import { useUserContext } from "../hooks/useUserContext"
+import type { Experience } from "../types"
 
 const Home = () => {
     const { experiences, deleteExperience } = useExperienceContext()
@@ -14,13 +15,14 @@ const Home = () => {
         (e) => e.user?.id !== user?.id
     )
 
-    const handleEdit = (exp: any) => {
+    const handleEdit = (exp: Experience) => {
         navigate(`/experience/${exp.id}`)
     }
 
-    const handleDelete = (exp: any) => {
+    const handleDelete = (exp: Experience) => {
         deleteExperience(exp.id)
     }
+
     return (
         <div className="container mx-auto px-4 py-6">
             <div className="flex flex-col lg:flex-row gap-6">

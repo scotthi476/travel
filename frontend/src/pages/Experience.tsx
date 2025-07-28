@@ -4,6 +4,7 @@ import { v4 } from "uuid"
 import ShadowCard from "../layout/ShadowCard"
 import { useNavigate, useParams } from "react-router-dom"
 import { useUserContext } from "../hooks/useUserContext"
+import type { ExperienceFormData } from "../types/experience"
 
 const Experience = () => {
     const { experienceId } = useParams()
@@ -15,7 +16,7 @@ const Experience = () => {
     const isEditing = Boolean(experienceId)
     const existing = experiences.find((e) => e.id === experienceId)
 
-    const handleSubmit = (data: any) => {
+    const handleSubmit = (data: ExperienceFormData) => {
         const experienceWithMeta = {
             ...data,
             id: isEditing && existing ? existing.id : v4(),

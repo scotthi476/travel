@@ -34,7 +34,10 @@ const ExperienceForm = ({
         ...initialData,
     })
 
-    const handleChange = (field: keyof ExperienceFormData, value: any) => {
+    const handleChange = <K extends keyof ExperienceFormData>(
+        field: K,
+        value: ExperienceFormData[K]
+    ) => {
         setForm((prev) => ({ ...prev, [field]: value }))
     }
 
