@@ -11,6 +11,7 @@ import ProtectedRoute from "./router/ProtectedRoute"
 import { ExperienceProvider } from "./context/ExperienceProvider"
 import { TripProvider } from "./context/TripProvider"
 import { UserProvider } from "./context/UserProvider"
+import Trip from "./pages/Trip"
 
 function App() {
     return (
@@ -28,10 +29,30 @@ function App() {
                                     element={<Experience />}
                                 />
                                 <Route
+                                    path="experience/:experienceId"
+                                    element={<Experience />}
+                                />
+                                <Route
                                     path="my-trips"
                                     element={
                                         <ProtectedRoute>
                                             <MyTrips />
+                                        </ProtectedRoute>
+                                    }
+                                />
+                                <Route
+                                    path="trip"
+                                    element={
+                                        <ProtectedRoute>
+                                            <Trip />
+                                        </ProtectedRoute>
+                                    }
+                                />
+                                <Route
+                                    path="trip/:tripId"
+                                    element={
+                                        <ProtectedRoute>
+                                            <Trip />
                                         </ProtectedRoute>
                                     }
                                 />

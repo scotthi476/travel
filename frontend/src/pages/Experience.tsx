@@ -1,89 +1,54 @@
-import React, { useState } from "react"
-import "../App.css"
+import ExperienceForm from "../components/forms/ExperienceForm"
+import { useExperienceContext } from "../hooks/useExperienceContext"
+import { v4 } from "uuid"
+import ShadowCard from "../layout/ShadowCard"
+import { useNavigate, useParams } from "react-router-dom"
 import { useUserContext } from "../hooks/useUserContext"
-import { useTripContext } from "../hooks/useTripContext"
-
-// TODO: Syme add form for CRUD operation
-// Followed guide to create form: https://dev.to/luqmanshaban/creating-a-sign-up-form-in-react-with-typescript-2jb3
 
 const Experience = () => {
-    const [title, setTitle] = useState("")
-    const { addTrip } = useTripContext()
+    const { experienceId } = useParams()
+    const navigate = useNavigate()
+    const { experiences, addExperience, updateExperience } =
+        useExperienceContext()
     const { user } = useUserContext()
+
+    const isEditing = Boolean(experienceId)
+    const existing = experiences.find((e) => e.id === experienceId)
+
+    const handleSubmit = (data: any) => {
+        const experienceWithMeta = {
+            ...data,
+            id: isEditing && existing ? existing.id : v4(),
+            user: user ?? {
+                id: "placeholder-user",
+                username: "demo_user",
+                isLoggedIn: false,
+                authMethod: "guest",
+            },
+            ratingAverage: data.rating,
+        }
+
+        if (isEditing && existing) {
+            updateExperience(experienceWithMeta)
+        } else {
+            addExperience(experienceWithMeta)
+        }
+
+        navigate("/")
+    }
+
     return (
         <div>
-            <br />
-            <h1>Create an Experience:</h1>
-            <br />
-            <form>
-                <div>
-                    <p>
-                        <label htmlFor="title">Title: </label>
-                        <br />
-                        <input type="text" name="title" id="title" required />
-                        <br />
-                    </p>
-                </div>
-                <div>
-                    <label htmlFor="description">Description: </label>
-                    <br />
-                    <input
-                        type="text"
-                        name="description"
-                        id="description"
-                        required
-                    />
-                    <br />
-                </div>
-                <div>
-                    <label htmlFor="date">Date: </label>
-                    <br />
-                    <input type="date" name="date" id="date" required />
-                    <br />
-                </div>
-                <div>
-                    <label htmlFor="imageUrl">Image URL: </label>
-                    <br />
-                    <input type="text" name="imageUrl" id="imageUrl" required />
-                    <br />
-                </div>
-                <div>
-                    <label htmlFor="latitude">Latitude: </label>
-                    <br />
-                    <input
-                        type="number"
-                        name="latitude"
-                        id="latitude"
-                        required
-                    />
-                    <br />
-                </div>
-                <div>
-                    <label htmlFor="longitude">Longitude: </label>
-                    <br />
-                    <input
-                        type="number"
-                        name="longitude"
-                        id="longitude"
-                        required
-                    />
-                    <br />
-                </div>
-                <div>
-                    <label htmlFor="rating">Rating: </label>
-                    <br />
-                    <input type="number" name="rating" id="rating" />
-                    <br />
-                </div>
-                <div>
-                    <label htmlFor="keyword">Keyword: </label>
-                    <br />
-                    <input type="text" name="keyword" id="keyword" />
-                    <br />
-                    <br />
-                </div>
-                <button>Submit</button>
-            </form>
+            <h1 className="text-xl font-semibold mb-4">
+                {isEditing ? "Edit Experience" : "Create Experience"}
+            </h1>
+            <ShadowCard>
+                <ExperienceForm
+                    onSubmit={handleSubmit}
+                    initialData={existing}
+                    isEditing={isEditing}
+                />
+            </ShadowCard>
         </div>
     )
 }

@@ -1,9 +1,10 @@
 import { useEffect, useState, type ReactNode } from "react"
 import type { Trip } from "../types"
 import { TripContext } from "./TripContext"
+import { mockTripList } from "../assets/trips"
 
 export const TripProvider = ({ children }: { children: ReactNode }) => {
-    const [trips, setTrips] = useState<Trip[]>([])
+    const [trips, setTrips] = useState<Trip[]>(mockTripList)
 
     const fetchTrips = async () => {
         // TODO: Replace this with a real backend GET endpoint
