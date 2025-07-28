@@ -1,9 +1,11 @@
-import { useContext, useEffect, useState, type ReactNode } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import type { Experience } from "../types"
 import { ExperienceContext } from "./ExperienceContext"
+import { mockExperiences } from "../assets/experiences"
 
 export const ExperienceProvider = ({ children }: { children: ReactNode }) => {
-    const [experiences, setExperiences] = useState<Experience[]>([])
+    const [experiences, setExperiences] =
+        useState<Experience[]>(mockExperiences)
 
     const fetchExperiences = async () => {
         // TODO: Replace this with a real backend GET endpoint

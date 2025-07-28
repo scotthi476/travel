@@ -23,7 +23,7 @@ type Props = {
     // Descriptive label shown above the input
     label: string
     // Input value
-    value: string
+    value: string | Date
     // Change event handler, i.e. text is entered
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     // Input type, default is "text"
@@ -49,8 +49,16 @@ const TextInput = ({
     helperText,
     error,
 }: Props) => {
+    const inputValue =
+        type === "date" && value instanceof Date
+            ? value.toISOString().slice(0, 10)
+            : typeof value === "string"
+            ? value
+            : ""
+
     const baseClass =
         "w-full p-2 border rounded-sm transition focus:outline-none focus:ring-1"
+
     const errorClass = error
         ? "border-red-500 focus:ring-red-500"
         : "border-zinc-300 focus:ring-orange-500"
@@ -63,7 +71,7 @@ const TextInput = ({
             <input
                 id={id}
                 type={type}
-                value={value}
+                value={inputValue}
                 onChange={onChange}
                 placeholder={placeholder}
                 disabled={disabled}

@@ -1,53 +1,26 @@
-import { useState } from "react"
 import type { Trip } from "../types"
-import { mockTripList } from "../assets/trips.ts"
 import "./TripList.tsx"
 import TripList from "./TripList.tsx"
-import "./AddTrip.tsx"
-import AddTrip from "./AddTrip.tsx"
-import EditTrip from "./EditTrip.tsx"
-import "../App.css"
+import { useNavigate } from "react-router-dom"
+import { useTripContext } from "../hooks/useTripContext.ts"
+import Button from "../components/ui/Button.tsx"
 
-// TODO: Hisami add form for CRUD operation
 //Reference : https://www.youtube.com/watch?v=R1uTPIOuT8s React Simple CRUD Application
 
 const MyTrips = () => {
-    const [tripList, _setTripList] = useState(mockTripList as Trip[])
+    const navigate = useNavigate()
+    const { trips, deleteTrip } = useTripContext()
 
-    const [displayPage, setDisplayPage] = useState("list");
-    const [dataToEdit, setDataToEdit] = useState({} as null| Trip);
-
-    const onAddTripClickHnd = () => {
-        setDisplayPage("add")
+    const handleAddTrip = () => {
+        navigate("/trip")
     }
 
-    const showListPage = () => {
-        setDisplayPage("list")
+    const handleEditTrip = (trip: Trip) => {
+        navigate(`/trip/${trip.id}`)
     }
 
-    const addTrip = (data: Trip) => {
-       _setTripList([...tripList, data]);
-    }
-
-    const deleteTrip = (data: Trip) =>{
-      const indexToDelete = tripList.indexOf(data);
-      const tempList = [...tripList]
-
-      tempList.splice(indexToDelete,1);
-      _setTripList(tempList);      
-    }
-
-    const editEmployeeData = (data: Trip) =>{
-        setDisplayPage("edit");
-        setDataToEdit(data);
-    }
-
-    const updateData = (data: Trip) => {
-       const filteredData = tripList.filter(x => x.id === data.id)[0];
-       const indexOfRecord = tripList.indexOf(filteredData);
-       const tempdata = [...tripList] 
-       tempdata[indexOfRecord] = data;
-       _setTripList(tempdata);
+    const handleDeleteTrip = (trip: Trip) => {
+        deleteTrip(trip.id)
     }
 
     return (
@@ -58,20 +31,12 @@ const MyTrips = () => {
                 <br />
             </div>
             <section>
-                {displayPage === "list" && (
-                    <>
-                        <input
-                            type="button"
-                            value="Add Trip"
-                            onClick={onAddTripClickHnd}
-                        />
-                        <TripList _list={tripList} onDeleteClickHnd={deleteTrip} onEdit={editEmployeeData}/>
-                    </>
-                )}
-                {displayPage === "add" && (
-                    <AddTrip onCancelBtnClickHnd={showListPage} onSubmitHnd={addTrip} />
-                )}
-                {displayPage === "edit" && <EditTrip  onCancelBtnClickHnd={showListPage} onUpdateClickHnd={updateData}/>}
+                <Button onClick={handleAddTrip}>Add Trip</Button>
+                <TripList
+                    _list={trips}
+                    onDeleteClickHnd={handleDeleteTrip}
+                    onEdit={handleEditTrip}
+                />
             </section>
         </>
     )

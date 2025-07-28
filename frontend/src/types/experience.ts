@@ -6,7 +6,7 @@ export interface Experience {
     title: string
     description: string
     imageUrl: string
-    date?: Date // optional
+    date?: Date | string // optional
     rating?: number // optional
     latitude: number
     longitude: number
@@ -16,3 +16,8 @@ export interface Experience {
     keywords?: string[] // optional
     ratingAverage?: number // optional
 }
+
+export type ExperienceFormData = Omit<
+    Experience,
+    "id" | "user" | "ratingAverage" | "trips"
+>
