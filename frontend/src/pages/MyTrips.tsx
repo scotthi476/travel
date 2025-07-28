@@ -1,7 +1,6 @@
 import type { Trip } from "../types"
 import "./TripList.tsx"
 import TripList from "./TripList.tsx"
-import "./AddTrip.tsx"
 import { useNavigate } from "react-router-dom"
 import { useTripContext } from "../hooks/useTripContext.ts"
 import Button from "../components/ui/Button.tsx"
