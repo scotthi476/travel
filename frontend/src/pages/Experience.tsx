@@ -12,6 +12,7 @@ const Experience = () => {
         experiences,
         addExperience,
         updateExperience,
+        deleteExperience,
         isLoading,
         error,
         clearError,
@@ -20,10 +21,12 @@ const Experience = () => {
     const { user } = useUserContext()
 
     const isEditing = Boolean(experienceId)
-    const existing = experiences.find((e) => e.id === experienceId)
+    const existing = experiences.find((e) => e.id.toString() === experienceId)
 
+    // Submit handler that handles both new experience and update experience
     const handleSubmit = async (data: ExperienceFormData) => {
         // Clear any previuos errors
+        console.log("Debug - existing.keywords:", existing?.keywords)
         clearError()
         try {
             if (isEditing && existing) {
@@ -60,8 +63,25 @@ const Experience = () => {
         }
     }
 
+    // Delete handler
+    const handleDelete = async () => {
+        if (!existing?.id) return
+
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this experience?"
+        )
+        if (!confirmed) return
+
+        try {
+            await deleteExperience(existing.id)
+            navigate("/")
+        } catch (err) {
+            console.error("Failed to delete experience:", err)
+        }
+    }
+
     // Show loading state
-    if (isLoading) {
+    if (isLoading || (isEditing && !existing && experiences.length === 0)) {
         return (
             <div>
                 <h1 className="text-xl font-semibold mb-4">
@@ -92,7 +112,7 @@ const Experience = () => {
                             onClick={clearError}
                             className="text-red-500 hover:text-red-700"
                         >
-                            ×
+                            x
                         </button>
                     </div>
                 </div>
@@ -100,6 +120,7 @@ const Experience = () => {
             <ShadowCard>
                 <ExperienceForm
                     onSubmit={handleSubmit}
+                    onDelete={isEditing ? handleDelete : undefined}
                     initialData={existing}
                     isEditing={isEditing}
                 />

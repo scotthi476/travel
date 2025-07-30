@@ -1,6 +1,6 @@
 /**
  * Reusable text input component for form entries.
- * Supports different input types, disabled state, helper text, and error display.
+ * For dates, use the dedicated DatePicker component instead.
  *
  * Example:
  * <TextInput
@@ -23,11 +23,11 @@ type Props = {
     // Descriptive label shown above the input
     label: string
     // Input value
-    value: string | Date
-    // Change event handler, i.e. text is entered
+    value: string
+    // Change event handler
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
     // Input type, default is "text"
-    type?: React.HTMLInputTypeAttribute
+    type?: "text" | "email" | "password" | "number"
     // Optional placeholder text
     placeholder?: string
     // Optional indication of if the input should be disabled
@@ -49,13 +49,6 @@ const TextInput = ({
     helperText,
     error,
 }: Props) => {
-    const inputValue =
-        type === "date" && value instanceof Date
-            ? value.toISOString().slice(0, 10)
-            : typeof value === "string"
-            ? value
-            : ""
-
     const baseClass =
         "w-full p-2 border rounded-sm transition focus:outline-none focus:ring-1"
 
@@ -71,7 +64,7 @@ const TextInput = ({
             <input
                 id={id}
                 type={type}
-                value={inputValue}
+                value={value}
                 onChange={onChange}
                 placeholder={placeholder}
                 disabled={disabled}

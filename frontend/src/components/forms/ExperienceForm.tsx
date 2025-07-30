@@ -1,6 +1,6 @@
 // Followed guide to create form: https://dev.to/luqmanshaban/creating-a-sign-up-form-in-react-with-typescript-2jb3
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import TextInput from "../ui/TextInput"
 import Textarea from "../ui/Textarea"
 import ImageUpload from "../ui/ImageUpload"
@@ -9,15 +9,18 @@ import RatingInput from "../ui/RatingInput"
 import KeywordInput from "../ui/KeywordInput"
 import Button from "../ui/Button"
 import type { ExperienceFormData } from "../../types"
+import DatePicker from "../ui/DatePicker"
 
 type Props = {
     onSubmit: (data: ExperienceFormData) => void
+    onDelete?: () => void
     initialData?: ExperienceFormData
     isEditing?: boolean
 }
 
 const ExperienceForm = ({
     onSubmit,
+    onDelete,
     initialData,
     isEditing = false,
 }: Props) => {
@@ -34,6 +37,16 @@ const ExperienceForm = ({
         ...initialData,
     })
 
+    // Update form when initialData changes (for editing existing experiences)
+    useEffect(() => {
+        if (initialData) {
+            setForm((prevForm) => ({
+                ...prevForm, // Keep current form state as base
+                ...initialData, // Override with initialData
+            }))
+        }
+    }, [initialData])
+
     const handleChange = <K extends keyof ExperienceFormData>(
         field: K,
         value: ExperienceFormData[K]
@@ -45,6 +58,7 @@ const ExperienceForm = ({
         e.preventDefault()
         onSubmit(form)
     }
+
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <TextInput
@@ -67,11 +81,10 @@ const ExperienceForm = ({
                 onChange={(url) => handleChange("imageUrl", url)}
             />
 
-            <TextInput
+            <DatePicker
                 id="date"
                 label="Date"
-                type="date"
-                value={form.date ?? ""}
+                value={form.date}
                 onChange={(e) => handleChange("date", e.target.value)}
             />
 
@@ -106,9 +119,17 @@ const ExperienceForm = ({
                 onChange={(kws) => handleChange("keywords", kws)}
             />
 
-            <Button type="submit">
-                {isEditing ? "Update Experience" : "Create Experience"}
-            </Button>
+            <div className="flex gap-2">
+                <Button type="submit">
+                    {isEditing ? "Update Experience" : "Create Experience"}
+                </Button>
+
+                {onDelete && (
+                    <Button type="button" variant="delete" onClick={onDelete}>
+                        Delete Experience
+                    </Button>
+                )}
+            </div>
         </form>
     )
 }
