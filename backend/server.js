@@ -1,35 +1,35 @@
 //Reference https://www.youtube.com/watch?v=NMnKGHgw8aM Run your React app on Google Cloud
 
-const express = require('express');
-const app = express();
-app.use(express.json());
+const express = require("express")
+const cors = require("cors")
+require("dotenv").config()
+// Import routes
+const experienceRoutes = require("./routes/experienceRoutes")
+const tripRoutes = require("./routes/tripRoutes")
 
-const port = process.env.PORT || 8080;
-app.listen(port, () => {
-    console.log(`Using port ${port}`);
-});
+const app = express()
 
-//API to access to the trip data
-app.get('/api/trips/:id', (req, res) => {
-  const id = req.params.id;
-  const trip = getTrip(id);
-  if(!trip){
-     res.status(404).send({error: `trip ${id} not found` })
-    }
-   else {
-    res.send({ data:trip });
-   }     
+// Middleware
+app.use(cors())
+app.use(express.json())
+
+// Health check endpoint
+app.get("/health", (req, res) => {
+    res.status(200).json({ message: "Server is running" })
 })
 
-//TODO: Below code is using a sample data set.  Need to connect to the cloud SQL and retrive data from the db. 
-function getTrip(id){
-    const trips = [
-      {id: 1, name: 'Boston Trip'},
-      {id: 2, name: 'New York Trip'},
-      {id: 3, name: 'Arizona Trip'},
-      {id: 4, name: 'California Trip'},
-      {id: 5, name: 'East Cost Trip'},
-      {id: 6, name: 'Illinois Trip'},
-    ];
-    return trips.find(p =>p.id == id);
-}
+// Routes
+app.use("/api/experiences", experienceRoutes)
+app.use("/api/trips", tripRoutes)
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error("Error:", err)
+    res.status(500).json({ error: "Internal server error" })
+})
+
+const port = process.env.PORT || 3001
+
+app.listen(port, () => {
+    console.log(`Using port ${port}`)
+})

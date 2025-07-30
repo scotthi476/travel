@@ -16,11 +16,13 @@ const ExperienceCard = ({ experience, onEdit, onDelete }: Props) => {
     return (
         <div className="block border rounded-lg overflow-hidden shadow hover:shadow-lg transition">
             <Link to={`/experience/${experience.id}`}>
-                <img
-                    src={experience.imageUrl}
-                    alt={experience.title}
-                    className="w-full h-48 object-cover"
-                />
+                {experience.imageUrl && (
+                    <img
+                        src={experience.imageUrl}
+                        alt={experience.title}
+                        className="w-full h-48 object-cover"
+                    />
+                )}
                 <div className="p-4">
                     <h3 className="text-lg font-semibold">
                         {experience.title}
