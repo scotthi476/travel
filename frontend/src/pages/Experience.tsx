@@ -26,7 +26,6 @@ const Experience = () => {
     // Submit handler that handles both new experience and update experience
     const handleSubmit = async (data: ExperienceFormData) => {
         // Clear any previuos errors
-        console.log("Debug - existing.keywords:", existing?.keywords)
         clearError()
         try {
             if (isEditing && existing) {
