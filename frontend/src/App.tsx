@@ -12,6 +12,7 @@ import { ExperienceProvider } from "./contexts"
 import { TripProvider } from "./contexts"
 import { AuthProvider } from "./contexts/AuthContext"
 import TripPage from "./pages/TripPage"
+import ExperienceViewPage from "./pages/ExperienceViewPage"
 
 function App() {
     return (
@@ -31,6 +32,10 @@ function App() {
                                 <Route
                                     path="experience/:experienceId"
                                     element={<ExperiencePage />}
+                                />
+                                <Route
+                                    path="/experience/view/:id"
+                                    element={<ExperienceViewPage />}
                                 />
                                 <Route
                                     path="my-trips"

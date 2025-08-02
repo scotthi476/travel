@@ -74,7 +74,6 @@ const TripPage = () => {
 
     // Delete handler
     const handleDelete = async () => {
-        console.log(trips)
         if (!existing?.id) return
 
         const confirmed = window.confirm(

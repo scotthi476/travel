@@ -1,7 +1,5 @@
-import { useNavigate } from "react-router-dom"
 import ExperienceGrid from "../features/experience/ExperienceGrid"
 import FilterSidebar from "../features/filters/FilterSidebar"
-import type { Experience } from "../types"
 import { useAuth } from "../contexts/AuthContext"
 import { useExperienceContext } from "../contexts"
 import { useEffect } from "react"
@@ -9,11 +7,6 @@ import { useEffect } from "react"
 const Home = () => {
     const { items: experiences, loadItems } = useExperienceContext()
     const { currentUser } = useAuth()
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        loadItems()
-    }, [])
 
     const yourExperiences = experiences.filter(
         (e) => e.createdBy === currentUser?.uid
@@ -22,9 +15,9 @@ const Home = () => {
         (e) => e.createdBy !== currentUser?.uid
     )
 
-    const handleEdit = (exp: Experience) => {
-        navigate(`/experience/${exp.id}`)
-    }
+    useEffect(() => {
+        loadItems()
+    }, [])
 
     return (
         <div className="container mx-auto px-4 py-6">
@@ -36,10 +29,7 @@ const Home = () => {
                             <h2 className="text-2xl font-bold mb-4">
                                 Your Experiences
                             </h2>
-                            <ExperienceGrid
-                                experiences={yourExperiences}
-                                onEdit={handleEdit}
-                            />
+                            <ExperienceGrid experiences={yourExperiences} />
                         </div>
                     )}
 

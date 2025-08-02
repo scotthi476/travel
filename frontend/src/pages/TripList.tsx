@@ -5,10 +5,12 @@ type Props = {
     list: Trip[]
     onDeleteClickHnd: (data: Trip) => void
     onEdit: (data: Trip) => void
+    onSelect?: (data: Trip) => void
+    selectedTripId?: string
 }
 
 const TripList = (props: Props) => {
-    const { list, onDeleteClickHnd, onEdit } = props
+    const { list, onDeleteClickHnd, onSelect, selectedTripId, onEdit } = props
     return (
         <div className="mt-4">
             <table className="w-full border border-collapse">
@@ -21,7 +23,15 @@ const TripList = (props: Props) => {
                 </thead>
                 <tbody>
                     {list.map((t) => (
-                        <tr key={t.id} className="border-t">
+                        <tr
+                            key={t.id}
+                            className={`border-t cursor-pointer hover:bg-gray-50 ${
+                                selectedTripId === t.id
+                                    ? "bg-blue-50 border-blue-200"
+                                    : ""
+                            }`}
+                            onClick={() => onSelect?.(t)}
+                        >
                             <td className="py-2">{t.title}</td>
                             <td className="py-2">
                                 {t.experiences?.length || 0}

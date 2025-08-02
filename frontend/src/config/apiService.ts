@@ -69,18 +69,3 @@ export const apiService = {
         await handleResponse(response)
     },
 }
-
-// Log API calls in development
-if (config.isDevelopment) {
-    const originalFetch = window.fetch
-    window.fetch = async (...args) => {
-        console.log("DEV ONLY: API Call:", args[0])
-        const response = await originalFetch(...args)
-        console.log(
-            "DEV ONLY: API Response:",
-            response.status,
-            response.statusText
-        )
-        return response
-    }
-}
