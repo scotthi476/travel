@@ -1,29 +1,31 @@
 import { useNavigate, useParams } from "react-router-dom"
-import { useTripContext } from "../hooks/useTripContext"
-import { useUserContext } from "../hooks/useUserContext"
 import TripForm from "../components/forms/TripForm"
-import type { TripFormData } from "../types"
 import ShadowCard from "../layout/ShadowCard"
+import { useTripContext } from "../contexts"
+import { useAuth } from "../contexts/AuthContext"
+import type { Trip } from "../types"
 
-const Trip = () => {
+const TripPage = () => {
     const { tripId } = useParams()
     const navigate = useNavigate()
     const {
-        trips,
-        addTrip,
-        updateTrip,
-        deleteTrip,
+        items: trips,
+        createItem,
+        updateItem,
+        deleteItem,
         isLoading,
         error,
         clearError,
     } = useTripContext()
-    const { user } = useUserContext()
+    const { currentUser } = useAuth()
 
     const isEditing = Boolean(tripId)
     const existing = trips.find((t) => t.id.toString() === tripId)
 
     // Submit handler that handles both new trip and update trip
-    const handleSubmit = async (data: TripFormData) => {
+    const handleSubmit = async (
+        data: Omit<Trip, "id" | "createdAt" | "createdBy" | "updatedAt">
+    ) => {
         clearError()
 
         try {
@@ -32,26 +34,21 @@ const Trip = () => {
                 const updatedTrip = {
                     ...data,
                     id: existing?.id,
-                    createdBy: user ?? {
+                    createdBy: currentUser ?? {
                         id: "placeholder-user",
                         username: "demo_user",
                         isLoggedIn: false,
                         authMethod: "guest",
                     },
                 }
-                await updateTrip(updatedTrip)
+                await updateItem(existing.id, data)
             } else {
                 // For new trips, create object without ID
                 const newTrip = {
                     ...data,
-                    createdBy: user ?? {
-                        id: "placeholder-user",
-                        username: "demo_user",
-                        isLoggedIn: false,
-                        authMethod: "guest",
-                    },
+                    createdBy: currentUser?.uid,
                 }
-                await addTrip(newTrip)
+                await createItem(newTrip)
             }
             navigate("/my-trips")
         } catch (err) {
@@ -86,16 +83,14 @@ const Trip = () => {
         if (!confirmed) return
 
         try {
-            await deleteTrip(existing.id)
+            await deleteItem(existing.id.toString())
             navigate("/")
         } catch (err) {
             console.error("Failed to delete experience:", err)
         }
     }
 
-    const initialData = existing
-        ? { title: existing.title, experiences: existing.experiences }
-        : undefined
+    const initialData = existing || undefined
 
     return (
         <div>
@@ -121,7 +116,7 @@ const Trip = () => {
                     onSubmit={handleSubmit}
                     onDelete={isEditing ? handleDelete : undefined}
                     onCancel={() => navigate("/my-trips")}
-                    initialData={initialData}
+                    initialData={initialData || undefined}
                     isEditing={isEditing}
                 />
             </ShadowCard>
@@ -129,4 +124,4 @@ const Trip = () => {
     )
 }
 
-export default Trip
+export default TripPage

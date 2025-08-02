@@ -6,11 +6,13 @@ const tripController = {
         try {
             const result = await pool.query(`
                 SELECT 
-                    trip_id as id,
-                    user_id,
+                    id,
+                    created_by as "createdBy",
                     title,
-                    created_at,
-                    updated_at
+                    collaborators,
+                    experiences,
+                    created_at as "createdAt",
+                    updated_at as "updatedAt"
                 FROM trips 
                 ORDER BY created_at DESC
             `)
@@ -28,13 +30,15 @@ const tripController = {
             const result = await pool.query(
                 `
                 SELECT 
-                    trip_id as id,
-                    user_id,
+                    id,
+                    created_by as "createdBy",
                     title,
-                    created_at,
-                    updated_at
+                    collaborators,
+                    experiences,
+                    created_at as "createdAt",
+                    updated_at as "updatedAt"
                 FROM trips 
-                WHERE trip_id = $1
+                WHERE id = $1
             `,
                 [id]
             )
@@ -52,24 +56,33 @@ const tripController = {
     createTrip: async (req, res) => {
         try {
             const {
-                user_id = 1, // Default to user 1 for now
+                createdBy,
                 title,
+                collaborators = [],
+                experiences = [],
             } = req.body
             if (!title) {
                 return res.status(400).json({ error: "Title is required" })
             }
             const result = await pool.query(
                 `
-                INSERT INTO trips (user_id, title) 
-                VALUES ($1, $2)
-                RETURNING 
-                    trip_id as id,
-                    user_id,
+                    INSERT INTO trips (created_by, title, collaborators, experiences) 
+                    VALUES ($1, $2, $3, $4)
+                    RETURNING 
+                    id,
+                    created_by as "createdBy",
                     title,
-                    created_at,
-                    updated_at
+                    collaborators,
+                    experiences,
+                    created_at as "createdAt",
+                    updated_at as "updatedAt"
             `,
-                [user_id, title]
+                [
+                    createdBy,
+                    title,
+                    JSON.stringify(collaborators),
+                    JSON.stringify(experiences),
+                ]
             )
             res.status(201).json(result.rows[0])
         } catch (error) {
@@ -82,25 +95,53 @@ const tripController = {
     updateTrip: async (req, res) => {
         try {
             const { id } = req.params
-            const { title } = req.body
-            if (!title) {
-                return res.status(400).json({ error: "Title is required" })
+            const { title, collaborators, experiences } = req.body
+
+            // Build dynamic update query based on provided fields
+            let updateFields = []
+            let values = []
+            let paramCount = 0
+
+            if (title !== undefined) {
+                paramCount++
+                updateFields.push(`title = $${paramCount}`)
+                values.push(title)
             }
+
+            if (collaborators !== undefined) {
+                paramCount++
+                updateFields.push(`collaborators = $${paramCount}`)
+                values.push(JSON.stringify(collaborators))
+            }
+
+            if (experiences !== undefined) {
+                paramCount++
+                updateFields.push(`experiences = $${paramCount}`)
+                values.push(JSON.stringify(experiences))
+            }
+
+            // Add updated_at timestamp
+            updateFields.push("updated_at = CURRENT_TIMESTAMP")
+
+            // Add the ID parameter
+            paramCount++
+            values.push(id)
+
             const result = await pool.query(
                 `
-                UPDATE trips 
-                SET 
-                    title = $1,
-                    updated_at = CURRENT_TIMESTAMP
-                WHERE trip_id = $2
-                RETURNING 
-                    trip_id as id,
-                    user_id,
-                    title,
-                    created_at,
-                    updated_at
-            `,
-                [title, id]
+            UPDATE trips 
+            SET ${updateFields.join(", ")}
+            WHERE id = $${paramCount}
+            RETURNING 
+                id,
+                created_by as "createdBy",
+                title,
+                collaborators,
+                experiences,
+                created_at as "createdAt",
+                updated_at as "updatedAt"
+        `,
+                values
             )
             if (result.rows.length === 0) {
                 return res.status(404).json({ error: "Trip not found" })
@@ -117,7 +158,7 @@ const tripController = {
         try {
             const { id } = req.params
             const result = await pool.query(
-                "DELETE FROM trips WHERE trip_id = $1 RETURNING trip_id",
+                "DELETE FROM trips WHERE id = $1 RETURNING id",
                 [id]
             )
             if (result.rows.length === 0) {

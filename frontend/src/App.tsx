@@ -4,19 +4,19 @@ import Layout from "./layout/Layout"
 import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
-import MyTrips from "./pages/MyTrips"
-import Experience from "./pages/Experience"
+import MyTripsPage from "./pages/MyTripsPage"
+import ExperiencePage from "./pages/ExperiencePage"
 import NotFound from "./pages/NotFound"
 import ProtectedRoute from "./router/ProtectedRoute"
-import { ExperienceProvider } from "./context/ExperienceProvider"
-import { TripProvider } from "./context/TripProvider"
-import { UserProvider } from "./context/UserProvider"
-import Trip from "./pages/Trip"
+import { ExperienceProvider } from "./contexts"
+import { TripProvider } from "./contexts"
+import { AuthProvider } from "./contexts/AuthContext"
+import TripPage from "./pages/TripPage"
 
 function App() {
     return (
         <>
-            <UserProvider>
+            <AuthProvider>
                 <TripProvider>
                     <ExperienceProvider>
                         <Routes>
@@ -26,17 +26,17 @@ function App() {
                                 <Route path="register" element={<Register />} />
                                 <Route
                                     path="experience"
-                                    element={<Experience />}
+                                    element={<ExperiencePage />}
                                 />
                                 <Route
                                     path="experience/:experienceId"
-                                    element={<Experience />}
+                                    element={<ExperiencePage />}
                                 />
                                 <Route
                                     path="my-trips"
                                     element={
                                         <ProtectedRoute>
-                                            <MyTrips />
+                                            <MyTripsPage />
                                         </ProtectedRoute>
                                     }
                                 />
@@ -44,7 +44,7 @@ function App() {
                                     path="trip"
                                     element={
                                         <ProtectedRoute>
-                                            <Trip />
+                                            <TripPage />
                                         </ProtectedRoute>
                                     }
                                 />
@@ -52,7 +52,7 @@ function App() {
                                     path="trip/:tripId"
                                     element={
                                         <ProtectedRoute>
-                                            <Trip />
+                                            <TripPage />
                                         </ProtectedRoute>
                                     }
                                 />
@@ -61,7 +61,7 @@ function App() {
                         </Routes>
                     </ExperienceProvider>
                 </TripProvider>
-            </UserProvider>
+            </AuthProvider>
         </>
     )
 }

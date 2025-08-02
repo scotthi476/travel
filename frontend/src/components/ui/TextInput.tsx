@@ -36,6 +36,7 @@ type Props = {
     helperText?: string
     // Optional error message and visual state
     error?: string
+    required?: boolean
 }
 
 const TextInput = ({

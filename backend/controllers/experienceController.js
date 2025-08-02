@@ -6,19 +6,20 @@ const experienceController = {
         try {
             const result = await pool.query(`
                 SELECT 
-                    experience_id as id,
-                    user_id,
+                    id,
+                    created_by as "createdBy",
                     title,
                     description,
-                    experience_date as date,
+                    date,
                     image_url as "imageUrl",
                     latitude,
                     longitude,
                     rating,
                     keywords,
                     is_public as "isPublic",
-                    created_at,
-                    updated_at
+                    rating_average as "ratingAverage",
+                    created_at as "createdAt",
+                    updated_at as "updatedAt"
                 FROM experiences 
                 ORDER BY created_at DESC
             `)
@@ -36,21 +37,22 @@ const experienceController = {
             const result = await pool.query(
                 `
                 SELECT 
-                    experience_id as id,
-                    user_id,
+                    id,
+                    created_by as "createdBy",
                     title,
                     description,
-                    experience_date as date,
+                    date,
                     image_url as "imageUrl",
                     latitude,
                     longitude,
                     rating,
                     keywords,
                     is_public as "isPublic",
-                    created_at,
-                    updated_at
+                    rating_average as "ratingAverage",
+                    created_at as "createdAt",
+                    updated_at as "updatedAt"
                 FROM experiences 
-                WHERE experience_id = $1
+                WHERE id = $1
             `,
                 [id]
             )
@@ -68,7 +70,7 @@ const experienceController = {
     createExperience: async (req, res) => {
         try {
             const {
-                user_id = 1, // Default to user 1 for now
+                createdBy,
                 title,
                 description,
                 date,
@@ -77,7 +79,7 @@ const experienceController = {
                 longitude,
                 rating,
                 keywords = [],
-                isPublic = false,
+                isPublic = true,
             } = req.body
 
             // Handle empty date string - convert to null for database
@@ -86,30 +88,31 @@ const experienceController = {
             const result = await pool.query(
                 `
                 INSERT INTO experiences (
-                    user_id, title, description, experience_date, 
+                    created_by, title, description, date, 
                     image_url, latitude, longitude, rating, keywords, is_public
                 ) 
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
                 RETURNING 
-                    experience_id as id,
-                    user_id,
+                    id,
+                    created_by as "createdBy",
                     title,
                     description,
-                    experience_date as date,
+                    date,
                     image_url as "imageUrl",
                     latitude,
                     longitude,
                     rating,
                     keywords,
                     is_public as "isPublic",
-                    created_at,
-                    updated_at
+                    rating_average as "ratingAverage",
+                    created_at as "createdAt",
+                    updated_at as "updatedAt"
             `,
                 [
-                    user_id,
+                    createdBy,
                     title,
                     description,
-                    date,
+                    experienceDate,
                     imageUrl,
                     latitude,
                     longitude,
@@ -138,7 +141,7 @@ const experienceController = {
                 longitude,
                 rating,
                 keywords = [],
-                isPublic = false,
+                isPublic = true,
             } = req.body
 
             // Handle empty date string - convert to null for database
@@ -150,7 +153,7 @@ const experienceController = {
                 SET 
                     title = $1,
                     description = $2,
-                    experience_date = $3,
+                    date = $3,
                     image_url = $4,
                     latitude = $5,
                     longitude = $6,
@@ -158,26 +161,27 @@ const experienceController = {
                     keywords = $8,
                     is_public = $9,
                     updated_at = CURRENT_TIMESTAMP
-                WHERE experience_id = $10
+                WHERE id = $10
                 RETURNING 
-                    experience_id as id,
-                    user_id,
+                    id,
+                    created_by as "createdBy",
                     title,
                     description,
-                    experience_date as date,
+                    date,
                     image_url as "imageUrl",
                     latitude,
                     longitude,
                     rating,
                     keywords,
                     is_public as "isPublic",
-                    created_at,
-                    updated_at
+                    rating_average as "ratingAverage",
+                    created_at as "createdAt",
+                    updated_at as "updatedAt"
             `,
                 [
                     title,
                     description,
-                    date,
+                    experienceDate,
                     imageUrl,
                     latitude,
                     longitude,
@@ -202,7 +206,7 @@ const experienceController = {
         try {
             const { id } = req.params
             const result = await pool.query(
-                "DELETE FROM experiences WHERE experience_id = $1 RETURNING experience_id",
+                "DELETE FROM experiences WHERE id = $1 RETURNING id",
                 [id]
             )
             if (result.rows.length === 0) {

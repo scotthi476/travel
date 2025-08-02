@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
 import TextInput from "../ui/TextInput"
 import Button from "../ui/Button"
-import type { TripFormData } from "../../types"
+import type { Trip } from "../../types"
+
+type TripFormData = Omit<Trip, "id" | "createdAt" | "updatedAt">
 
 type Props = {
     onSubmit: (data: TripFormData) => void
     onCancel: () => void
     onDelete?: () => void
-    initialData?: TripFormData
+    initialData?: Trip
     isEditing?: boolean
 }
 
@@ -20,7 +22,9 @@ const TripForm = ({
 }: Props) => {
     const [form, setForm] = useState<TripFormData>({
         title: "",
+        collaborators: [],
         experiences: [],
+        createdBy: "",
         ...initialData,
     })
 

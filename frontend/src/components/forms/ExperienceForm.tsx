@@ -8,25 +8,32 @@ import GeoInput from "../ui/GeoInput"
 import RatingInput from "../ui/RatingInput"
 import KeywordInput from "../ui/KeywordInput"
 import Button from "../ui/Button"
-import type { ExperienceFormData } from "../../types"
 import DatePicker from "../ui/DatePicker"
+import type { Experience } from "../../types"
+
+type ExperienceFormData = Omit<Experience, "id" | "createdAt" | "updatedAt">
 
 type Props = {
     onSubmit: (data: ExperienceFormData) => void
     onDelete?: () => void
-    initialData?: ExperienceFormData
+    onCancel?: () => void
+    initialData?: Experience
     isEditing?: boolean
+    isLoading?: boolean
 }
 
 const ExperienceForm = ({
     onSubmit,
     onDelete,
+    onCancel,
     initialData,
     isEditing = false,
+    isLoading = false,
 }: Props) => {
     const [form, setForm] = useState<ExperienceFormData>({
         title: "",
         description: "",
+        createdBy: "",
         imageUrl: "",
         date: "",
         rating: 1,
@@ -56,7 +63,9 @@ const ExperienceForm = ({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        onSubmit(form)
+        if (!isLoading) {
+            onSubmit(form)
+        }
     }
 
     return (
@@ -66,6 +75,7 @@ const ExperienceForm = ({
                 label="Title"
                 value={form.title}
                 onChange={(e) => handleChange("title", e.target.value)}
+                required
             />
 
             <Textarea
@@ -73,6 +83,7 @@ const ExperienceForm = ({
                 label="Description"
                 value={form.description}
                 onChange={(e) => handleChange("description", e.target.value)}
+                required
             />
 
             <ImageUpload
@@ -101,6 +112,7 @@ const ExperienceForm = ({
                     handleChange("latitude", lat ?? 0)
                     handleChange("longitude", lng ?? 0)
                 }}
+                required
             />
 
             <div className="flex items-center gap-2">
@@ -121,12 +133,23 @@ const ExperienceForm = ({
 
             <div className="flex gap-2">
                 <Button type="submit">
-                    {isEditing ? "Update Experience" : "Create Experience"}
+                    {isLoading
+                        ? isEditing
+                            ? "Updating..."
+                            : "Creating..."
+                        : isEditing
+                        ? "Update"
+                        : "Create"}
                 </Button>
 
                 {onDelete && (
                     <Button type="button" variant="delete" onClick={onDelete}>
-                        Delete Experience
+                        Delete
+                    </Button>
+                )}
+                {onCancel && (
+                    <Button type="button" variant="cancel" onClick={onCancel}>
+                        Cancel
                     </Button>
                 )}
             </div>

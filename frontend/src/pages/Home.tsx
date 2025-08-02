@@ -1,26 +1,29 @@
 import { useNavigate } from "react-router-dom"
 import ExperienceGrid from "../features/experience/ExperienceGrid"
 import FilterSidebar from "../features/filters/FilterSidebar"
-import { useExperienceContext } from "../hooks/useExperienceContext"
-import { useUserContext } from "../hooks/useUserContext"
 import type { Experience } from "../types"
+import { useAuth } from "../contexts/AuthContext"
+import { useExperienceContext } from "../contexts"
+import { useEffect } from "react"
 
 const Home = () => {
-    const { experiences, deleteExperience } = useExperienceContext()
-    const { user } = useUserContext()
+    const { items: experiences, loadItems } = useExperienceContext()
+    const { currentUser } = useAuth()
     const navigate = useNavigate()
 
-    const yourExperiences = experiences.filter((e) => e.user?.id === user?.id)
+    useEffect(() => {
+        loadItems()
+    }, [])
+
+    const yourExperiences = experiences.filter(
+        (e) => e.createdBy === currentUser?.uid
+    )
     const popularExperiences = experiences.filter(
-        (e) => e.user?.id !== user?.id
+        (e) => e.createdBy !== currentUser?.uid
     )
 
     const handleEdit = (exp: Experience) => {
         navigate(`/experience/${exp.id}`)
-    }
-
-    const handleDelete = (exp: Experience) => {
-        deleteExperience(exp.id)
     }
 
     return (
@@ -36,7 +39,6 @@ const Home = () => {
                             <ExperienceGrid
                                 experiences={yourExperiences}
                                 onEdit={handleEdit}
-                                onDelete={handleDelete}
                             />
                         </div>
                     )}

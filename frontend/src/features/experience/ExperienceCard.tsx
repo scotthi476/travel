@@ -1,6 +1,8 @@
 import Button from "../../components/ui/Button"
 import type { Experience } from "../../types"
 import { Link } from "react-router-dom"
+import AddToTripModal from "../trips/AddToTripModal"
+import { useState } from "react"
 
 // TODO: Add "Add to Trip" button
 // TODO: Add more meta info (e.g., location, price, etc. if supported)
@@ -13,6 +15,7 @@ interface Props {
 }
 
 const ExperienceCard = ({ experience, onEdit, onDelete }: Props) => {
+    const [showTripModal, setShowTripModal] = useState(false)
     return (
         <div className="block border rounded-lg overflow-hidden shadow hover:shadow-lg transition">
             <Link to={`/experience/${experience.id}`}>
@@ -32,6 +35,23 @@ const ExperienceCard = ({ experience, onEdit, onDelete }: Props) => {
                     </p>
                 </div>
             </Link>
+            <div className="flex gap-2">
+                <Button
+                    onClick={() => setShowTripModal(true)}
+                    variant="outline"
+                >
+                    + Add to Trip
+                </Button>
+
+                <Button
+                    onClick={() => {
+                        /* Navigate to experience detail */
+                    }}
+                    variant="primary"
+                >
+                    View
+                </Button>
+            </div>
             {(onEdit || onDelete) && (
                 <div className="absolute top-2 right-2 flex gap-2">
                     {onEdit && (
@@ -46,6 +66,12 @@ const ExperienceCard = ({ experience, onEdit, onDelete }: Props) => {
                     )}
                 </div>
             )}
+            {/* Modal */}
+            <AddToTripModal
+                experienceId={parseInt(experience.id)}
+                isOpen={showTripModal}
+                onClose={() => setShowTripModal(false)}
+            />
         </div>
     )
 }

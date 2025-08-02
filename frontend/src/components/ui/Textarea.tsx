@@ -17,6 +17,7 @@ type Props = {
     error?: string
     // Optional number of visible text rows
     rows?: number
+    required?: boolean
 }
 
 const Textarea = ({

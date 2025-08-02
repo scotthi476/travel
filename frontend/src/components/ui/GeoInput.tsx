@@ -28,6 +28,7 @@ type Props = {
     error?: string
     // Optional to disable both fields
     disabled?: boolean
+    required?: boolean
 }
 
 const GeoInput = ({
