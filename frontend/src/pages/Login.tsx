@@ -1,4 +1,4 @@
-import React, {
+import {
     useState,
     type FormEvent,
     type ChangeEvent,
@@ -100,7 +100,7 @@ const Login = () => {
 
         // log in with Firebase
         try {
-            const userCredential = await signInWithEmailAndPassword(
+            const _userCredential = await signInWithEmailAndPassword(
                 auth,
                 formData.email,
                 formData.password
