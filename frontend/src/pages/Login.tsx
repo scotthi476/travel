@@ -100,12 +100,12 @@ const Login = () => {
 
         // log in with Firebase
         try {
-            const _userCredential = await signInWithEmailAndPassword(
+            const userCredential = await signInWithEmailAndPassword(
                 auth,
                 formData.email,
                 formData.password
             )
-
+            console.log(userCredential)
             // redirect user to homepage
             navigate("/")
 

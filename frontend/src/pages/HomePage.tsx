@@ -5,13 +5,7 @@ import { useExperienceContext } from "../contexts"
 import { useEffect } from "react"
 
 const HomePage = () => {
-    const {
-        items: experiences,
-        updateItem,
-        deleteItem,
-        loadItems,
-        loaded,
-    } = useExperienceContext()
+    const { items: experiences, loadItems, loaded } = useExperienceContext()
     const { currentUser } = useAuth()
 
     // If not items not loaded yet, call loadItems()
@@ -42,11 +36,7 @@ const HomePage = () => {
                             <h2 className="text-2xl font-bold mb-4">
                                 Your Experiences
                             </h2>
-                            <ExperienceGrid
-                                experiences={userExperiences}
-                                handleEdit={updateItem}
-                                handleDelete={deleteItem}
-                            />
+                            <ExperienceGrid experiences={userExperiences} />
                         </div>
                     )}
 
@@ -55,11 +45,7 @@ const HomePage = () => {
                         <h2 className="text-2xl font-bold mb-4">
                             Popular Experiences
                         </h2>
-                        <ExperienceGrid
-                            experiences={publicExperiences}
-                            handleEdit={updateItem}
-                            handleDelete={deleteItem}
-                        />
+                        <ExperienceGrid experiences={publicExperiences} />
                     </div>
                 </div>
 

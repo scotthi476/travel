@@ -41,7 +41,7 @@ const TripPage = () => {
                         authMethod: "guest",
                     },
                 }
-                await updateItem(existing.id, data)
+                await updateItem(existing.id, updatedTrip)
             } else {
                 // For new trips, create object without ID
                 const newTrip = {
