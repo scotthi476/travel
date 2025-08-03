@@ -1,10 +1,9 @@
 // config.ts - Simple environment configuration
 export const config = {
     // API URL - defaults to local development
-    // apiUrl: process.env.REACT_APP_API_URL || "http://localhost:3001/api",
-    apiUrl: "http://localhost:3001/api",
+    apiUrl: import.meta.env.VITE_API_URL || "http://localhost:3001/api",
 
     // Environment flags
-    isDevelopment: process.env.NODE_ENV === "development",
-    isProduction: process.env.NODE_ENV === "production",
+    isDevelopment: import.meta.env.DEV,
+    isProduction: import.meta.env.PROD,
 }

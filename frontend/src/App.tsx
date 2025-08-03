@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom"
 import "./App.css"
 import Layout from "./layout/Layout"
-import Home from "./pages/Home"
+import HomePage from "./pages/HomePage"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import MyTripsPage from "./pages/MyTripsPage"
@@ -22,7 +22,7 @@ function App() {
                     <ExperienceProvider>
                         <Routes>
                             <Route path="/" element={<Layout />}>
-                                <Route index element={<Home />} />
+                                <Route index element={<HomePage />} />
                                 <Route path="login" element={<Login />} />
                                 <Route path="register" element={<Register />} />
                                 <Route

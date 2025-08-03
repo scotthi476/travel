@@ -3,8 +3,6 @@ import type { Experience } from "../../types"
 import { Link, useNavigate } from "react-router-dom"
 import AddToTripModal from "../trips/AddToTripModal"
 import { useState } from "react"
-import { useAuth } from "../../contexts/AuthContext"
-import { useExperienceContext } from "../../contexts"
 
 // TODO: Add "Add to Trip" button
 // TODO: Add more meta info (e.g., location, price, etc. if supported)
@@ -15,33 +13,10 @@ interface Props {
 }
 
 const ExperienceCard = ({ experience }: Props) => {
+    // State for showing add to trip modal
     const [showTripModal, setShowTripModal] = useState(false)
+
     const navigate = useNavigate()
-    const { currentUser } = useAuth()
-    const { loadItems, deleteItem } = useExperienceContext()
-
-    const handleEdit = (exp: Experience) => {
-        navigate(`/experience/${exp.id}`)
-    }
-
-    const handleDelete = async (experience: Experience) => {
-        const confirmed = window.confirm(
-            `Are you sure you want to delete "${experience.title}"? This action cannot be undone.`
-        )
-
-        if (confirmed) {
-            try {
-                await deleteItem(experience.id.toString())
-                await loadItems()
-            } catch (error) {
-                console.error("Failed to delete experience:", error)
-                alert("Failed to delete experience. Please try again.")
-            }
-        }
-    }
-
-    // Check if current user owns this experience
-    const isOwner = currentUser?.uid === experience.createdBy
 
     return (
         <div className="block border rounded-lg overflow-hidden shadow hover:shadow-lg transition px-2 py-4">
@@ -78,22 +53,6 @@ const ExperienceCard = ({ experience }: Props) => {
                 >
                     View
                 </Button>
-                {isOwner && (
-                    <>
-                        <Button
-                            variant="update"
-                            onClick={() => handleEdit(experience)}
-                        >
-                            Edit
-                        </Button>
-                        <Button
-                            variant="delete"
-                            onClick={() => handleDelete(experience)}
-                        >
-                            Delete
-                        </Button>
-                    </>
-                )}
             </div>
 
             {/* Modal */}

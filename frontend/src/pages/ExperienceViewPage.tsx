@@ -3,11 +3,14 @@ import { useExperienceContext } from "../contexts"
 import { useEffect } from "react"
 import Button from "../components/ui/Button"
 import ShadowCard from "../layout/ShadowCard"
+import { useAuth } from "../contexts/AuthContext"
 
 const ExperienceViewPage = () => {
     const { id } = useParams<{ id: string }>()
     const navigate = useNavigate()
+
     const { items: experiences, loadItems, getById } = useExperienceContext()
+    const { currentUser } = useAuth()
 
     const experience = getById(parseInt(id || "0"))
 
@@ -25,6 +28,9 @@ const ExperienceViewPage = () => {
             </div>
         )
     }
+
+    // Check if current user owns this experience
+    const isOwner = currentUser?.uid === experience.createdBy
 
     return (
         <div>
@@ -104,6 +110,18 @@ const ExperienceViewPage = () => {
                     <Button onClick={() => navigate(-1)} variant="cancel">
                         Back
                     </Button>
+                    {isOwner && (
+                        <>
+                            <Button
+                                variant="update"
+                                onClick={() =>
+                                    navigate(`/experience/${experience.id}`)
+                                }
+                            >
+                                Edit
+                            </Button>
+                        </>
+                    )}
                 </div>
             </ShadowCard>
         </div>

@@ -7,7 +7,6 @@ resources: https://firebase.google.com/docs/web/setup
 
 import { initializeApp } from "firebase/app"
 import { getAuth } from "firebase/auth"
-//import { getFirestore } from "firebase/firestore"
 
 // configuration to use Firebase
 const firebaseConfig = {
@@ -27,8 +26,6 @@ const app = initializeApp(firebaseConfig)
 // for user registration, user login and logout, and authentication state monitoring
 export const auth = getAuth(app)
 
-// initialize and export firestore db
-//export const db = getFirestore(app)
 export const db = null
 
 export default app

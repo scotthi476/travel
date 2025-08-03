@@ -12,9 +12,7 @@ const dbConfig = {
 // Only use CONNECTION_STRING if it's explicitly set and valid
 if (process.env.DATABASE_URL && process.env.DATABASE_URL.trim() !== "") {
     dbConfig.connectionString = process.env.DATABASE_URL
-    if (process.env.NODE_ENV === "production") {
-        dbConfig.ssl = { rejectUnauthorized: false }
-    }
+    dbConfig.ssl = { rejectUnauthorized: false }
 }
 
 // Create connection pool

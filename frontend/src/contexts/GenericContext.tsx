@@ -7,6 +7,7 @@ interface GenericState<T extends GenericModel> {
     items: T[]
     isLoading: boolean
     error: string | null
+    loaded: boolean
 }
 
 // Generic action types
@@ -23,6 +24,7 @@ interface GenericContextType<T extends GenericModel> {
     items: T[]
     isLoading: boolean
     error: string | null
+    loaded: boolean
     loadItems: () => Promise<void>
     createItem: (
         data: Omit<T, "id" | "createdBy" | "createdAt" | "updatedAt">
@@ -53,6 +55,7 @@ function createGenericReducer<T extends GenericModel>() {
                     items: action.payload,
                     isLoading: false,
                     error: null,
+                    loaded: true,
                 }
             case "ADD_ITEM":
                 return {
@@ -101,6 +104,7 @@ export function createModelContext<T extends GenericModel>(
         items: [], // User[], Experience[], Trip[] depending on T
         isLoading: false,
         error: null,
+        loaded: false,
     }
 
     // Create reducer for this model
@@ -197,6 +201,7 @@ export function createModelContext<T extends GenericModel>(
             items: state.items, // User[], Experience[], Trip[]
             isLoading: state.isLoading,
             error: state.error,
+            loaded: state.loaded,
             loadItems,
             createItem,
             updateItem,

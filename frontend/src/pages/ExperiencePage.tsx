@@ -5,6 +5,7 @@ import { useExperienceContext } from "../contexts"
 import { useEffect, useState } from "react"
 import type { Experience } from "../types"
 import { useAuth } from "../contexts/AuthContext"
+import ExperienceGrid from "../features/experience/ExperienceGrid"
 
 const ExperiencePage = () => {
     // Get params
@@ -12,7 +13,7 @@ const ExperiencePage = () => {
     const navigate = useNavigate()
 
     // Get auth context
-    const { currentUser, loading: authLoading } = useAuth()
+    const { currentUser } = useAuth()
 
     // CRUD operations from context
     const {
@@ -31,52 +32,49 @@ const ExperiencePage = () => {
         useState<Experience | null>(null)
     const [_isInitialized, setIsInitialized] = useState(false)
 
-    const [_isdeleting, setIsDeleting] = useState(false)
-
+    // Determine if editing based on if param was passed
     const isEditing = Boolean(experienceId)
 
     // Redirect to login if not authenticated
     useEffect(() => {
-        if (!authLoading && !currentUser) {
-            // Redirect to login page
+        if (!currentUser) {
             navigate("/login")
         }
-    }, [currentUser, authLoading, navigate])
+    }, [currentUser, navigate])
 
     // Load data and check for existing experience
     useEffect(() => {
-        // Don't initialize if user is not authenticated
-        if (!currentUser || authLoading) return
-
         const initializePage = async () => {
-            // Load experiences if not already loaded
-            if (experiences.length === 0) {
-                await loadItems()
+            // If no experience ID provided, we're in create mode - just initialize
+            if (!experienceId) {
+                setIsInitialized(true)
+                return
             }
 
-            // If we have an ID, try to find the experience
-            if (experienceId) {
-                const experience = getById(experienceId)
-                if (experience) {
-                    // Check if current user owns this experience
-                    if (experience.createdBy !== currentUser.uid) {
-                        console.warn(
-                            "User does not have permission to edit this experience"
-                        )
-                        navigate("/experiences", { replace: true })
-                        return
-                    }
-                    setExistingExperience(experience)
-                } else {
-                    // Experience not found, redirect to create mode
-                    console.warn(`Experience with ID ${experienceId} not found`)
-                    navigate("/experience", { replace: true })
-                    return
-                }
+            // Try to find the experience by ID
+            const experience = getById(experienceId)
+            if (!experience) {
+                // Experience doesn't exist - redirect to home
+                console.warn(`Experience with ID ${experienceId} not found`)
+                navigate("/", { replace: true })
+                return
             }
 
+            // Check if current user has permission to edit this experience
+            if (experience.createdBy !== currentUser?.uid) {
+                // User doesn't own this experience - redirect to home
+                console.warn(
+                    "User does not have permission to edit this experience"
+                )
+                navigate("/", { replace: true })
+                return
+            }
+
+            // All validations passed - set the experience for editing
+            setExistingExperience(experience)
             setIsInitialized(true)
         }
+
         initializePage()
     }, [])
 
@@ -91,17 +89,11 @@ const ExperiencePage = () => {
             const data = {
                 ...experienceData,
                 createdBy: currentUser.uid,
-                // Note: createdBy will be set automatically by the mock API or backend
-                // but we could explicitly set it here if needed
             }
-
             await createItem(data)
-
-            // Navigate back to experiences list
-            navigate("/experiences")
+            navigate("/")
         } catch (error) {
             console.error("Failed to create experience:", error)
-            // Error is already handled by context and will show in the form
         }
     }
 
@@ -115,15 +107,7 @@ const ExperiencePage = () => {
 
         try {
             await updateItem(existingExperience.id, experienceData)
-
-            // Update local state with the updated experience
-            const updatedExp = getById(existingExperience.id)
-            if (updatedExp) {
-                setExistingExperience(updatedExp)
-            }
-
-            // Navigate back to experiences list
-            navigate("/experiences")
+            navigate("/")
         } catch (error) {
             console.error("Failed to update experience:", error)
             // Error is already handled by context and will show in the form
@@ -131,19 +115,19 @@ const ExperiencePage = () => {
     }
 
     // Handle deleting experience
-    const handleDelete = async () => {
-        if (!existingExperience || !currentUser) return
-
-        try {
-            setIsDeleting(true)
-            await deleteItem(existingExperience.id)
-
-            // Navigate back to experiences list
-            navigate("/experiences")
-        } catch (error) {
-            console.error("Failed to delete experience:", error)
-            setIsDeleting(false)
-            // Error is already handled by context
+    const handleDelete = async (experience: Experience) => {
+        const confirmed = window.confirm(
+            `Are you sure you want to delete "${experience.title}"?`
+        )
+        if (confirmed) {
+            try {
+                await deleteItem(experience.id.toString())
+                await loadItems()
+                navigate("/")
+            } catch (error) {
+                console.error("Failed to delete experience:", error)
+                alert("Failed to delete experience. Please try again.")
+            }
         }
     }
 
@@ -151,11 +135,6 @@ const ExperiencePage = () => {
     const handleCancel = () => {
         clearError()
         navigate("/") // Go back to previous page
-    }
-
-    // Don't render anything if user is not authenticated (will redirect)
-    if (!currentUser) {
-        return null
     }
 
     return (
@@ -180,11 +159,15 @@ const ExperiencePage = () => {
             <ShadowCard>
                 <ExperienceForm
                     onSubmit={isEditing ? handleUpdate : handleCreate}
-                    onDelete={isEditing ? handleDelete : undefined}
+                    onDelete={handleDelete}
                     onCancel={handleCancel}
                     initialData={existingExperience || undefined}
                     isEditing={isEditing}
+                    experience={existingExperience || undefined}
                 />
+            </ShadowCard>
+            <ShadowCard>
+                <ExperienceGrid experiences={experiences} />
             </ShadowCard>
         </div>
     )

@@ -15,11 +15,12 @@ type ExperienceFormData = Omit<Experience, "id" | "createdAt" | "updatedAt">
 
 type Props = {
     onSubmit: (data: ExperienceFormData) => void
-    onDelete?: () => void
+    onDelete?: (experience: Experience) => void
     onCancel?: () => void
     initialData?: Experience
     isEditing?: boolean
     isLoading?: boolean
+    experience?: Experience | null
 }
 
 const ExperienceForm = ({
@@ -29,6 +30,7 @@ const ExperienceForm = ({
     initialData,
     isEditing = false,
     isLoading = false,
+    experience,
 }: Props) => {
     const [form, setForm] = useState<ExperienceFormData>({
         title: "",
@@ -142,12 +144,16 @@ const ExperienceForm = ({
                         : "Create"}
                 </Button>
 
-                {onDelete && (
-                    <Button type="button" variant="delete" onClick={onDelete}>
+                {isEditing && onDelete && experience && (
+                    <Button
+                        type="button"
+                        variant="delete"
+                        onClick={() => onDelete(experience)}
+                    >
                         Delete
                     </Button>
                 )}
-                {onCancel && (
+                {isEditing && (
                     <Button type="button" variant="cancel" onClick={onCancel}>
                         Cancel
                     </Button>
