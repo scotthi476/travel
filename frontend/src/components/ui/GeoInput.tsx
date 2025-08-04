@@ -28,6 +28,7 @@ type Props = {
     error?: string
     // Optional to disable both fields
     disabled?: boolean
+    required?: boolean
 }
 
 const GeoInput = ({
@@ -44,7 +45,9 @@ const GeoInput = ({
         const trimmed = value.trim()
         if (trimmed === "") return null
         const parsed = parseFloat(trimmed)
-        return isNaN(parsed) ? null : parsed
+        if (isNaN(parsed)) return null
+        // Truncation to 8 decimal places to fit database
+        return Math.round(parsed * 100000000) / 100000000
     }
     return (
         <div>

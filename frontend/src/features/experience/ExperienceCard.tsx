@@ -1,6 +1,8 @@
 import Button from "../../components/ui/Button"
 import type { Experience } from "../../types"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import AddToTripModal from "../trips/AddToTripModal"
+import { useState } from "react"
 
 // TODO: Add "Add to Trip" button
 // TODO: Add more meta info (e.g., location, price, etc. if supported)
@@ -8,19 +10,24 @@ import { Link } from "react-router-dom"
 
 interface Props {
     experience: Experience
-    onEdit?: () => void
-    onDelete?: () => void
 }
 
-const ExperienceCard = ({ experience, onEdit, onDelete }: Props) => {
+const ExperienceCard = ({ experience }: Props) => {
+    // State for showing add to trip modal
+    const [showTripModal, setShowTripModal] = useState(false)
+
+    const navigate = useNavigate()
+
     return (
-        <div className="block border rounded-lg overflow-hidden shadow hover:shadow-lg transition">
-            <Link to={`/experience/${experience.id}`}>
-                <img
-                    src={experience.imageUrl}
-                    alt={experience.title}
-                    className="w-full h-48 object-cover"
-                />
+        <div className="block border rounded-lg overflow-hidden shadow hover:shadow-lg transition px-2 py-4">
+            <Link to={`/experience/view/${experience.id}`}>
+                {experience.imageUrl && (
+                    <img
+                        src={experience.imageUrl}
+                        alt={experience.title}
+                        className="w-full h-48 object-cover"
+                    />
+                )}
                 <div className="p-4">
                     <h3 className="text-lg font-semibold">
                         {experience.title}
@@ -30,20 +37,30 @@ const ExperienceCard = ({ experience, onEdit, onDelete }: Props) => {
                     </p>
                 </div>
             </Link>
-            {(onEdit || onDelete) && (
-                <div className="absolute top-2 right-2 flex gap-2">
-                    {onEdit && (
-                        <Button variant="update" onClick={onEdit}>
-                            Edit
-                        </Button>
-                    )}
-                    {onDelete && (
-                        <Button variant="delete" onClick={onDelete}>
-                            Delete
-                        </Button>
-                    )}
-                </div>
-            )}
+            <div className="flex gap-2">
+                <Button
+                    onClick={() => setShowTripModal(true)}
+                    variant="outline"
+                >
+                    Add to Trip
+                </Button>
+
+                <Button
+                    onClick={() =>
+                        navigate(`/experience/view/${experience.id}`)
+                    }
+                    variant="primary"
+                >
+                    View
+                </Button>
+            </div>
+
+            {/* Modal */}
+            <AddToTripModal
+                experienceId={parseInt(experience.id)}
+                isOpen={showTripModal}
+                onClose={() => setShowTripModal(false)}
+            />
         </div>
     )
 }

@@ -16,7 +16,7 @@ type Props = {
     // What type of button, default is primary
     variant?: Variant
     // Event handler
-    onClick?: React.MouseEventHandler<HTMLButtonElement>
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
     // Indicate if button is disabled, default is false
     disabled?: boolean
     // Accept valid JSX

@@ -1,4 +1,30 @@
-export * from "./user"
-export * from "./experience"
-export * from "./trip"
-export * from "./rating"
+export interface GenericModel {
+    id: string
+    createdAt: string
+    createdBy: string
+    updatedAt?: string
+}
+
+export interface Experience extends GenericModel {
+    title: string
+    description: string
+    imageUrl: string
+    date?: string // optional
+    rating?: number // optional
+    latitude: number
+    longitude: number
+    isPublic: boolean
+    keywords?: string[] // optional
+    ratingAverage?: number // optional
+}
+
+export interface Trip extends GenericModel {
+    title: string
+    collaborators?: string[] // optional
+    experiences: string[] // one-to-many join
+}
+
+export interface User extends GenericModel {
+    username: string
+    isLoggedIn: boolean
+}

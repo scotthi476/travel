@@ -32,6 +32,9 @@ const Navbar = () => {
 
                 {/* Desktop Nav Links */}
                 <div className="hidden sm:flex items-center gap-6 text-sm font-medium text-zinc-700">
+                    <Link to="/" className="hover:text-orange-600 transition">
+                        Home
+                    </Link>
                     <Link
                         to="/experience"
                         className="hover:text-orange-600 transition"

@@ -2,26 +2,40 @@ import Button from "../components/ui/Button"
 import type { Trip } from "../types"
 
 type Props = {
-    _list: Trip[]
+    list: Trip[]
     onDeleteClickHnd: (data: Trip) => void
     onEdit: (data: Trip) => void
+    onSelect?: (data: Trip) => void
+    selectedTripId?: string
 }
 
 const TripList = (props: Props) => {
-    const { _list, onDeleteClickHnd, onEdit } = props
+    const { list, onDeleteClickHnd, onSelect, selectedTripId, onEdit } = props
     return (
         <div className="mt-4">
             <table className="w-full border border-collapse">
                 <thead>
                     <tr>
                         <th className="text-left border-b pb-2">Title</th>
+                        <th className="text-left border-b pb-2">Experiences</th>
                         <th className="text-left border-b pb-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {_list.map((t) => (
-                        <tr key={t.id} className="border-t">
+                    {list.map((t) => (
+                        <tr
+                            key={t.id}
+                            className={`border-t cursor-pointer hover:bg-gray-50 ${
+                                selectedTripId === t.id
+                                    ? "bg-blue-50 border-blue-200"
+                                    : ""
+                            }`}
+                            onClick={() => onSelect?.(t)}
+                        >
                             <td className="py-2">{t.title}</td>
+                            <td className="py-2">
+                                {t.experiences?.length || 0}
+                            </td>
                             <td className="py-2">
                                 <div className="flex gap-2">
                                     <Button
