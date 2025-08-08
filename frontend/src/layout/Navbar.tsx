@@ -3,12 +3,26 @@
  */
 
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useAuth } from "../contexts/AuthContext"
+import { signOut } from "firebase/auth"
+import { auth } from "../config/firebase"
 
 const Navbar = () => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false)
     // TODO: replace with actual user context when ready
-    const user = null
+    const { currentUser } = useAuth()
+    const navigate = useNavigate()
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth)
+            navigate("/")
+            setMobileMenuOpen(false)
+        } catch (error) {
+            console.error("Failed to log out: ", error)
+        }
+    }
 
     return (
         <nav className="bg-zinc-100 border-b border-zinc-200">
@@ -47,7 +61,7 @@ const Navbar = () => {
                     >
                         My Trips
                     </Link>
-                    {user ? (
+                    {currentUser ? (
                         <>
                             <Link
                                 to="/profile"
@@ -55,7 +69,10 @@ const Navbar = () => {
                             >
                                 Profile
                             </Link>
-                            <button className="hover:text-orange-600 transition">
+                            <button
+                                onClick = {handleLogout} 
+                                className="hover:text-orange-600 transition"
+                            >
                                 Logout
                             </button>
                         </>
@@ -96,7 +113,7 @@ const Navbar = () => {
                     >
                         My Trips
                     </Link>
-                    {user ? (
+                    {currentUser ? (
                         <>
                             <Link
                                 to="/profile"
@@ -107,7 +124,7 @@ const Navbar = () => {
                             </Link>
                             <button
                                 className="hover:text-orange-600 text-left"
-                                onClick={() => setMobileMenuOpen(false)}
+                                onClick={handleLogout}
                             >
                                 Logout
                             </button>

@@ -350,7 +350,7 @@ const RegistrationForm = () => {
             <br />
 
             <div>
-                Already have an account? <a href="/Login">Log in</a>
+                Already have an account? <a href="/login">Log in</a>
             </div>
         </div>
     )

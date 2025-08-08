@@ -178,7 +178,7 @@ const Login = () => {
             <br />
             {/*Link to registration page*/}
             <div>
-                Don’t have an account? <a href="/Register">Register</a>
+                Don’t have an account? <a href="/register">Register</a>
             </div>
         </div>
     )
