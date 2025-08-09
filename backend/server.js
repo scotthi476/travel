@@ -3,9 +3,11 @@
 const express = require("express")
 const cors = require("cors")
 require("dotenv").config()
+
 // Import routes
 const experienceRoutes = require("./routes/experienceRoutes")
 const tripRoutes = require("./routes/tripRoutes")
+const searchRoutes = require("./routes/searchRoutes")
 
 const app = express()
 
@@ -21,6 +23,7 @@ app.get("/health", (req, res) => {
 // Routes
 app.use("/api/experiences", experienceRoutes)
 app.use("/api/trips", tripRoutes)
+app.use("/api/search", searchRoutes)
 
 // Error handling middleware
 app.use((err, req, res, next) => {

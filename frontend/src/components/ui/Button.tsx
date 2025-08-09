@@ -48,7 +48,8 @@ const Button = ({
                 "bg-amber-400 text-white hover:bg-amber-500 disabled:bg-amber-200"
             break
         case "cancel":
-            variantClass = "bg-gray-500 hover:bg-gray-600 disabled:bg-gray-200"
+            variantClass =
+                "bg-gray-500 text-white hover:bg-gray-600 disabled:bg-gray-200"
             break
         case "delete":
             variantClass =
