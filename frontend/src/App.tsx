@@ -14,6 +14,7 @@ import { AuthProvider } from "./contexts/AuthContext"
 import TripPage from "./pages/TripPage"
 import ExperienceViewPage from "./pages/ExperienceViewPage"
 import SearchResultsPage from "./pages/SearchResultsPage"
+import MapPage from "./pages/MapPage"
 
 function App() {
     return (
@@ -66,6 +67,7 @@ function App() {
                                     path="/search"
                                     element={<SearchResultsPage />}
                                 />
+                                <Route path="map" element={<MapPage />} />
                                 <Route path="*" element={<NotFound />} />
                             </Route>
                         </Routes>

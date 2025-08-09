@@ -17,7 +17,7 @@ type Props = {
     onSubmit: (data: ExperienceFormData) => void
     onDelete?: (experience: Experience) => void
     onCancel?: () => void
-    initialData?: Experience
+    initialData?: Partial<Experience>
     isEditing?: boolean
     isLoading?: boolean
     experience?: Experience | null

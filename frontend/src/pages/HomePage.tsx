@@ -27,33 +27,31 @@ const HomePage = () => {
     })
 
     return (
-        <div className="container mx-auto px-4 py-6">
-            <div className="flex flex-col lg:flex-row gap-6">
-                <div className="flex-grow space-y-10">
-                    {/* Auth User Experiences */}
-                    {userExperiences.length > 0 && (
-                        <div>
-                            <h2 className="text-2xl font-bold mb-4">
-                                Your Experiences
-                            </h2>
-                            <ExperienceGrid experiences={userExperiences} />
-                        </div>
-                    )}
-
-                    {/* Popular Experiences */}
+        <div className="flex flex-col lg:flex-row gap-6">
+            <div className="flex-grow space-y-10">
+                {/* Auth User Experiences */}
+                {userExperiences.length > 0 && (
                     <div>
                         <h2 className="text-2xl font-bold mb-4">
-                            Popular Experiences
+                            Your Experiences
                         </h2>
-                        <ExperienceGrid experiences={publicExperiences} />
+                        <ExperienceGrid experiences={userExperiences} />
                     </div>
-                </div>
+                )}
 
-                {/* Right Sidebar */}
-                <aside className="w-full lg:w-[280px]">
-                    <FilterSidebar />
-                </aside>
+                {/* Popular Experiences */}
+                <div>
+                    <h2 className="text-2xl font-bold mb-4">
+                        Popular Experiences
+                    </h2>
+                    <ExperienceGrid experiences={publicExperiences} />
+                </div>
             </div>
+
+            {/* Right Sidebar */}
+            <aside className="w-full lg:w-[420px]">
+                <FilterSidebar />
+            </aside>
         </div>
     )
 }
