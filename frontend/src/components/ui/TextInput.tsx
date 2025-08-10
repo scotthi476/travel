@@ -21,7 +21,7 @@ type Props = {
     // Unique identifier for input and label association
     id: string
     // Name attribute for form handling
-    name: string
+    name?: string
     // Descriptive label shown above the input
     label?: string
     // Input value
