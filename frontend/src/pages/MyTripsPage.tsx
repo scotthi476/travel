@@ -7,6 +7,7 @@ import { useExperienceContext, useTripContext } from "../contexts/index.ts"
 import { useEffect, useState } from "react"
 import { useAuth } from "../contexts/AuthContext.tsx"
 import ExperienceCard from "../features/experience/ExperienceCard.tsx"
+import ShadowCard from "../layout/ShadowCard.tsx"
 
 //Reference : https://www.youtube.com/watch?v=R1uTPIOuT8s React Simple CRUD Application
 
@@ -72,10 +73,10 @@ const MyTripsPage = () => {
             </section>
             {selectedTrip ? (
                 <section className="mt-8">
-                    <div className="bg-gray-50 p-6 rounded-lg">
+                    <ShadowCard>
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-xl font-semibold">
-                                {selectedTrip.title}
+                                Trip Details for: {selectedTrip.title}
                             </h2>
                             <Button onClick={() => setSelectedTrip(null)}>
                                 Clear Selection
@@ -128,10 +129,10 @@ const MyTripsPage = () => {
                                 </Button>
                             </div>
                         )}
-                    </div>
+                    </ShadowCard>
                 </section>
             ) : (
-                <div>Select a trip above to view details</div>
+                <div className="mt-8">Select a trip above to view details</div>
             )}
         </>
     )

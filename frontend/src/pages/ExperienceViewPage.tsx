@@ -40,11 +40,13 @@ const ExperienceViewPage = () => {
 
             <ShadowCard>
                 <div className="space-y-4">
-                    <img
-                        src={experience.imageUrl}
-                        alt={experience.title}
-                        className="w-full h-64 object-cover rounded"
-                    />
+                    {experience.imageUrl && (
+                        <img
+                            src={experience.imageUrl}
+                            alt={experience.title}
+                            className="w-full h-64 object-cover rounded"
+                        />
+                    )}
 
                     <div>
                         <h2 className="text-lg font-semibold mb-2">
@@ -107,11 +109,11 @@ const ExperienceViewPage = () => {
                         </p>
                         <p>Public: {experience.isPublic ? "Yes" : "No"}</p>
                     </div>
-                    <Button onClick={() => navigate(-1)} variant="cancel">
-                        Back
-                    </Button>
-                    {isOwner && (
-                        <>
+                    <div className="flex gap-2">
+                        <Button onClick={() => navigate(-1)} variant="cancel">
+                            Back
+                        </Button>
+                        {isOwner && (
                             <Button
                                 variant="update"
                                 onClick={() =>
@@ -120,8 +122,8 @@ const ExperienceViewPage = () => {
                             >
                                 Edit
                             </Button>
-                        </>
-                    )}
+                        )}
+                    </div>
                 </div>
             </ShadowCard>
         </div>
