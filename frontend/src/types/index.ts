@@ -15,7 +15,8 @@ export interface Experience extends GenericModel {
     longitude: number
     isPublic: boolean
     keywords?: string[] // optional
-    ratingAverage?: number // optional
+    ratingAverage?: number // optional community ratings
+    communityRatingCount?: number // total community ratings
 }
 
 export interface Trip extends GenericModel {

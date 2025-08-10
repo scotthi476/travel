@@ -28,6 +28,8 @@ type Props = {
     error?: string
     // Optional to disable the dropdown selection
     disabled?: boolean
+    // Optional placeholder option (e.g., "Select a rating...")
+    placeholder?: string
 }
 
 const RatingInput = ({
@@ -38,6 +40,7 @@ const RatingInput = ({
     helperText,
     error,
     disabled = false,
+    placeholder = "Select a rating...",
 }: Props) => {
     return (
         <div>
@@ -55,11 +58,14 @@ const RatingInput = ({
                         : "border-zinc-300 focus:ring-orange-500"
                 } ${disabled ? "bg-zinc-100 cursor-not-allowed" : ""}`}
             >
+                <option value={0} disabled>
+                    {placeholder}
+                </option>
                 {[...Array(max)].map((_, index) => {
                     const rating = index + 1
                     return (
                         <option key={rating} value={rating}>
-                            {rating} Star{rating > 1 && "s"}
+                            {rating} Star{rating > 1 ? "s" : ""}
                         </option>
                     )
                 })}
