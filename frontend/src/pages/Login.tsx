@@ -146,6 +146,7 @@ const Login = () => {
                             id="email"
                             value={formData.email}
                             onChange={handleChange}
+                            onBlur={handleBlur}
                             //disable user input while authenticating
                             disabled={isLoading}
                         />
@@ -164,6 +165,7 @@ const Login = () => {
                             id="password"
                             value={formData.password}
                             onChange={handleChange}
+                            onBlur={handleBlur}
                             //disable user input while authenticating
                             disabled={isLoading}
                         />

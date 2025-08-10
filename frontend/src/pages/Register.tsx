@@ -280,6 +280,7 @@ const RegistrationForm = () => {
                             name="lastname"
                             id="lastname"
                             value={formData.lastname}
+                            onBlur={handleBlur}
                             onChange={handleChange}
                             //disable user input while authenticating
                             disabled={isLoading}
@@ -299,6 +300,7 @@ const RegistrationForm = () => {
                             name="email"
                             id="email"
                             value={formData.email}
+                            onBlur={handleBlur}
                             onChange={handleChange}
                             //disable user input while authenticating
                             disabled={isLoading}
@@ -316,6 +318,7 @@ const RegistrationForm = () => {
                             name="password"
                             id="password"
                             value={formData.password}
+                            onBlur={handleBlur}
                             onChange={handleChange}
                             //disable user input while authenticating
                             disabled={isLoading}
@@ -337,6 +340,7 @@ const RegistrationForm = () => {
                             name="confirmPassword"
                             id="confirmPassword"
                             value={formData.confirmPassword}
+                            onBlur={handleBlur}
                             onChange={handleChange}
                             //disable user input while authenticating
                             disabled={isLoading}

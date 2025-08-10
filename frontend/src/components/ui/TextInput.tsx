@@ -40,6 +40,7 @@ type Props = {
     error?: string
     required?: boolean
     className?: string
+    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
 const TextInput = ({
