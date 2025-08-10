@@ -57,11 +57,9 @@ const MyTripsPage = () => {
     return (
         <>
             <div>
-                <br />
-                <h1>My Trips</h1>
-                <br />
+                <h1 className="text-xl font-semibold mb-4">My Trips</h1>
             </div>
-            <section>
+            <ShadowCard>
                 <Button onClick={handleAddTrip}>Add Trip</Button>
                 <TripList
                     list={userTrips}
@@ -70,7 +68,7 @@ const MyTripsPage = () => {
                     onSelect={handleSelectTrip}
                     selectedTripId={selectedTrip?.id}
                 />
-            </section>
+            </ShadowCard>
             {selectedTrip ? (
                 <section className="mt-8">
                     <ShadowCard>
@@ -78,7 +76,10 @@ const MyTripsPage = () => {
                             <h2 className="text-xl font-semibold">
                                 Trip Details for: {selectedTrip.title}
                             </h2>
-                            <Button onClick={() => setSelectedTrip(null)}>
+                            <Button
+                                onClick={() => setSelectedTrip(null)}
+                                variant="cancel"
+                            >
                                 Clear Selection
                             </Button>
                         </div>

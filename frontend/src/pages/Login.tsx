@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "../config/firebase"
 import "../App.css"
+import TextInput from "../components/ui/TextInput"
+import ShadowCard from "../layout/ShadowCard"
+import Button from "../components/ui/Button"
 
 // TODO: Andrew add login form
 // references used:
@@ -121,65 +124,75 @@ const Login = () => {
     }
 
     return (
-        <div>
-            <br />
-            <h2>Login</h2>
-            <br />
-
-            {/* if there is an auth error, display error*/}
-            {authError && (
-                <div style={{ color: "red", marginBottom: "10px" }}>
-                    {authError}
-                </div>
-            )}
-
-            <form onSubmit={handleSubmit} noValidate>
-                <div>
-                    <label htmlFor="email">Email: </label>
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        //disable user input while authenticating
-                        disabled={isLoading}
-                    />
-                    {errors.email && (
-                        <span style={{ color: "red" }}>{errors.email}</span>
-                    )}
-                </div>
-                <br />
-
-                <div>
-                    <label htmlFor="password">Password: </label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        //disable user input while authenticating
-                        disabled={isLoading}
-                    />
-                    {errors.password && (
-                        <span style={{ color: "red" }}>{errors.password}</span>
-                    )}
-                </div>
-                <br />
-
-                {/*submit button with loading state */}
-                <button type="submit" disabled={isLoading}>
-                    {isLoading ? "Logging in..." : "Log in"}
-                </button>
-            </form>
-            <br />
-            {/*Link to registration page*/}
-            <div>
-                Don’t have an account? <a href="/register">Register</a>
+        <div className="mx-auto max-w-8/12">
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-2xl font-bold">Login</h1>
             </div>
+            <ShadowCard>
+                {/* if there is an auth error, display error*/}
+                {authError && (
+                    <div style={{ color: "red", marginBottom: "10px" }}>
+                        {authError}
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} noValidate>
+                    <div className="space-y-4">
+                        <label htmlFor="email">Email: </label>
+                        <TextInput
+                            type="email"
+                            name="email"
+                            label=""
+                            id="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            //disable user input while authenticating
+                            disabled={isLoading}
+                        />
+                        {errors.email && (
+                            <span style={{ color: "red" }}>{errors.email}</span>
+                        )}
+                    </div>
+                    <br />
+
+                    <div className="mb-4">
+                        <label htmlFor="password">Password: </label>
+                        <TextInput
+                            type="password"
+                            name="password"
+                            label=""
+                            id="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            //disable user input while authenticating
+                            disabled={isLoading}
+                        />
+                        {errors.password && (
+                            <span style={{ color: "red" }}>
+                                {errors.password}
+                            </span>
+                        )}
+                    </div>
+
+                    {/*submit button with loading state */}
+                    <Button type="submit" disabled={isLoading}>
+                        {isLoading ? "Logging in..." : "Log in"}
+                    </Button>
+                </form>
+                <br />
+                {/*Link to registration page*/}
+                <div className="space-y-0.5">
+                    <div className="text-gray-400 text-sm">
+                        Don't have an account?
+                    </div>
+                    <Button
+                        onClick={() => navigate("/register")}
+                        variant="update"
+                    >
+                        Register
+                    </Button>
+                </div>
+            </ShadowCard>
         </div>
     )
 }

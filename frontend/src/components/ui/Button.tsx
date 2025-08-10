@@ -8,7 +8,13 @@
 
 import React from "react"
 
-type Variant = "primary" | "outline" | "update" | "delete" | "cancel"
+type Variant =
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "update"
+    | "delete"
+    | "cancel"
 
 type Props = {
     // Button type (button, submit, or reset), default is button
@@ -30,30 +36,33 @@ const Button = ({
     disabled = false,
     children,
 }: Props) => {
-    const baseClass = "px-4 py-2 rounded-sm transition cursor-pointer"
+    const baseClass = `px-4 py-2 rounded-sm transition border ${
+        disabled
+            ? "cursor-not-allowed disabled:text-gray-500 disabled:border-gray-500 disabled:bg-gray-50"
+            : "cursor-pointer"
+    }`
     let variantClass = ""
 
     // Tailwind classNames based on variant
     switch (variant) {
         case "primary":
-            variantClass =
-                "bg-orange-500 text-white hover:bg-orange-600 disabled:bg-orange-200"
+            variantClass = "bg-orange-500 text-white hover:bg-orange-600"
+            break
+        case "secondary":
+            variantClass = "bg-emerald-500 text-white hover:bg-emerald-600"
             break
         case "outline":
             variantClass =
-                "border border-orange-500 text-orange-500 hover:bg-orange-50 disabled:border-orange-200 disabled:text-orange-200"
+                "border-orange-500 text-orange-500 hover:bg-orange-50"
             break
         case "update":
-            variantClass =
-                "bg-amber-400 text-white hover:bg-amber-500 disabled:bg-amber-200"
+            variantClass = "bg-amber-600 text-white hover:bg-amber-700"
             break
         case "cancel":
-            variantClass =
-                "bg-gray-500 text-white hover:bg-gray-600 disabled:bg-gray-200"
+            variantClass = "bg-zinc-400 text-white hover:bg-zinc-500 "
             break
         case "delete":
-            variantClass =
-                "bg-red-500 text-white hover:bg-red-600 disabled:bg-red-200"
+            variantClass = "bg-red-500 text-white hover:bg-red-600"
             break
     }
 

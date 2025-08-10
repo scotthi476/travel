@@ -16,6 +16,9 @@ import {
 } from "firebase/firestore"
 import { auth, db } from "../config/firebase"
 import "../App.css"
+import ShadowCard from "../layout/ShadowCard"
+import TextInput from "../components/ui/TextInput"
+import Button from "../components/ui/Button"
 
 // TODO: Andrew add registration form
 // references used:
@@ -219,139 +222,150 @@ const RegistrationForm = () => {
     // optional socials authenticator
 
     return (
-        <div>
-            <br />
-            <h2>Create an Account</h2>
-            <br />
-
-            {/* if there is an auth error, display error*/}
-            {authError && (
-                <div style={{ color: "red", marginBottom: "10px" }}>
-                    {authError}
-                </div>
-            )}
-
-            <form onSubmit={handleSubmit} noValidate>
-                <div>
-                    <label htmlFor="username">Username: </label>
-                    <input
-                        type="text"
-                        name="username"
-                        id="username"
-                        value={formData.username}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        //disable user input while authenticating
-                        disabled={isLoading}
-                    />
-                    {errors.username && (
-                        <span style={{ color: "red" }}>{errors.username}</span>
-                    )}
-                </div>
-                <br />
-
-                <div>
-                    <label htmlFor="firstname">First Name: </label>
-                    <input
-                        type="text"
-                        name="firstname"
-                        id="firstname"
-                        value={formData.firstname}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        //disable user input while authenticating
-                        disabled={isLoading}
-                    />
-                    {errors.firstname && (
-                        <span style={{ color: "red" }}>{errors.firstname}</span>
-                    )}
-                    <br />
-                </div>
-
-                <div>
-                    <label htmlFor="lastname">Last Name: </label>
-                    <input
-                        type="text"
-                        name="lastname"
-                        id="lastname"
-                        value={formData.lastname}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        //disable user input while authenticating
-                        disabled={isLoading}
-                    />
-                    {errors.lastname && (
-                        <span style={{ color: "red" }}>{errors.lastname}</span>
-                    )}
-                </div>
-                <br />
-
-                <div>
-                    <label htmlFor="email">Email: </label>
-                    <input
-                        type="email"
-                        name="email"
-                        id="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        //disable user input while authenticating
-                        disabled={isLoading}
-                    />
-                    {errors.email && (
-                        <span style={{ color: "red" }}>{errors.email}</span>
-                    )}
-                </div>
-                <br />
-
-                <div>
-                    <label htmlFor="password">Password: </label>
-                    <input
-                        type="password"
-                        name="password"
-                        id="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        //disable user input while authenticating
-                        disabled={isLoading}
-                    />
-                    {errors.password && (
-                        <span style={{ color: "red" }}>{errors.password}</span>
-                    )}
-                </div>
-                <br />
-
-                <div>
-                    <label htmlFor="confirmPassword">Confirm Password: </label>
-                    <input
-                        type="password"
-                        name="confirmPassword"
-                        id="confirmPassword"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        //disable user input while authenticating
-                        disabled={isLoading}
-                    />
-                    {errors.confirmPassword && (
-                        <span style={{ color: "red" }}>
-                            {errors.confirmPassword}
-                        </span>
-                    )}
-                </div>
-                <br />
-
-                {/* submit with loading state */}
-                <button type="submit" disabled={isLoading}>
-                    {isLoading ? "Registering Account... " : "Register"}
-                </button>
-            </form>
-            <br />
-
-            <div>
-                Already have an account? <a href="/login">Log in</a>
+        <div className="mx-auto max-w-8/12">
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-2xl font-bold">Register</h1>
             </div>
+            <ShadowCard>
+                {/* if there is an auth error, display error*/}
+                {authError && (
+                    <div style={{ color: "red", marginBottom: "10px" }}>
+                        {authError}
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} noValidate>
+                    <div>
+                        <label htmlFor="username">Username: </label>
+                        <TextInput
+                            type="text"
+                            name="username"
+                            id="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            //disable user input while authenticating
+                            disabled={isLoading}
+                        />
+                        {errors.username && (
+                            <span style={{ color: "red" }}>
+                                {errors.username}
+                            </span>
+                        )}
+                    </div>
+                    <br />
+
+                    <div>
+                        <label htmlFor="firstname">First Name: </label>
+                        <TextInput
+                            type="text"
+                            name="firstname"
+                            id="firstname"
+                            value={formData.firstname}
+                            onChange={handleChange}
+                            //disable user input while authenticating
+                            disabled={isLoading}
+                        />
+                        {errors.firstname && (
+                            <span style={{ color: "red" }}>
+                                {errors.firstname}
+                            </span>
+                        )}
+                        <br />
+                    </div>
+
+                    <div>
+                        <label htmlFor="lastname">Last Name: </label>
+                        <TextInput
+                            type="text"
+                            name="lastname"
+                            id="lastname"
+                            value={formData.lastname}
+                            onChange={handleChange}
+                            //disable user input while authenticating
+                            disabled={isLoading}
+                        />
+                        {errors.lastname && (
+                            <span style={{ color: "red" }}>
+                                {errors.lastname}
+                            </span>
+                        )}
+                    </div>
+                    <br />
+
+                    <div>
+                        <label htmlFor="email">Email: </label>
+                        <TextInput
+                            type="email"
+                            name="email"
+                            id="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            //disable user input while authenticating
+                            disabled={isLoading}
+                        />
+                        {errors.email && (
+                            <span style={{ color: "red" }}>{errors.email}</span>
+                        )}
+                    </div>
+                    <br />
+
+                    <div>
+                        <label htmlFor="password">Password: </label>
+                        <TextInput
+                            type="password"
+                            name="password"
+                            id="password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            //disable user input while authenticating
+                            disabled={isLoading}
+                        />
+                        {errors.password && (
+                            <span style={{ color: "red" }}>
+                                {errors.password}
+                            </span>
+                        )}
+                    </div>
+                    <br />
+
+                    <div>
+                        <label htmlFor="confirmPassword">
+                            Confirm Password:{" "}
+                        </label>
+                        <TextInput
+                            type="password"
+                            name="confirmPassword"
+                            id="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            //disable user input while authenticating
+                            disabled={isLoading}
+                        />
+                        {errors.confirmPassword && (
+                            <span style={{ color: "red" }}>
+                                {errors.confirmPassword}
+                            </span>
+                        )}
+                    </div>
+                    <br />
+
+                    {/* submit with loading state */}
+                    <Button type="submit" disabled={isLoading}>
+                        {isLoading ? "Registering Account... " : "Register"}
+                    </Button>
+                </form>
+                <br />
+
+                {/*Link to login page*/}
+                <div className="space-y-0.5">
+                    <div className="text-gray-400 text-sm">
+                        Already have an account?
+                    </div>
+                    <Button onClick={() => navigate("/login")} variant="update">
+                        Login
+                    </Button>
+                </div>
+            </ShadowCard>
         </div>
     )
 }

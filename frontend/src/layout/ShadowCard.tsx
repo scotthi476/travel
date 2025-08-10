@@ -10,6 +10,7 @@
  */
 
 import type { ReactNode } from "react"
+import Logo from "../../public/logo.png"
 
 type Props = {
     // Card content
@@ -31,7 +32,14 @@ const ShadowCard = ({
             aria-label={ariaLabel}
             className={`px-8 py-6 my-6 mx-auto shadow-2xl border border-zinc-300 rounded-2xl bg-white ${className}`}
         >
-            <div>{children}</div>
+            <div className="flex flex-col items-center">
+                <img
+                    src={Logo}
+                    alt="Crowd Travel logo"
+                    className="h-14 w-14 md:h-16 md:w-16 mb-3 mx-auto select-none pointer-events-none"
+                />
+            </div>
+            {children}
         </section>
     )
 }

@@ -1,17 +1,16 @@
 /**
  * Global navigation bar with icon, search, and links.
  */
-
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 import { signOut } from "firebase/auth"
 import { auth } from "../config/firebase"
 import SearchBar from "../components/forms/SearchBar"
+import Logo from "../../public/logo.png"
 
 const Navbar = () => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false)
-    // TODO: replace with actual user context when ready
     const { currentUser } = useAuth()
     const navigate = useNavigate()
 
@@ -29,11 +28,12 @@ const Navbar = () => {
         <nav className="bg-zinc-100 border-b border-zinc-200">
             <div className="container mx-auto flex items-center justify-between px-6 py-20 gap-2">
                 {/* Icon */}
-                <Link
-                    to="/"
-                    className="text-xl font-bold text-orange-600 whitespace-nowrap"
-                >
-                    Travel App
+                <Link to="/">
+                    <img
+                        src={Logo}
+                        alt="Crowd Sourced Travel App logo"
+                        className="h-14 w-14 md:h-16 md:w-16 mx-auto select-none pointer-events-none"
+                    />{" "}
                 </Link>
 
                 {/* Desktop Search */}
@@ -58,15 +58,9 @@ const Navbar = () => {
                     </Link>
                     {currentUser ? (
                         <>
-                            <Link
-                                to="/profile"
-                                className="hover:text-orange-600 transition"
-                            >
-                                Profile
-                            </Link>
                             <button
                                 onClick={handleLogout}
-                                className="hover:text-orange-600 transition"
+                                className="hover:text-orange-600 transition hover:cursor-pointer"
                             >
                                 Logout
                             </button>
