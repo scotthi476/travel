@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useTripContext } from "../../contexts"
 import { useAuth } from "../../contexts/AuthContext"
 import Button from "../../components/ui/Button"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
     experienceId: number
@@ -19,6 +20,8 @@ const AddToTripModal = ({ experienceId, isOpen, onClose }: Props) => {
     const userTrips = trips.filter(
         (trip) => trip.createdBy === currentUser?.uid
     )
+
+    const navigate = useNavigate()
 
     // Load on open
     useEffect(() => {
@@ -94,7 +97,10 @@ const AddToTripModal = ({ experienceId, isOpen, onClose }: Props) => {
                         <p className="text-gray-500 mb-4">
                             You don't have any trips yet.
                         </p>
-                        <Button variant="primary">
+                        <Button
+                            variant="primary"
+                            onClick={() => navigate("/my-trips")}
+                        >
                             Create Your First Trip
                         </Button>
                     </div>

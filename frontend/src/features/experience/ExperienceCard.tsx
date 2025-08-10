@@ -37,7 +37,7 @@ const ExperienceCard = ({ experience }: Props) => {
                     </p>
                 </div>
             </Link>
-            <div className="flex gap-2">
+            <div className="flex gap-2 justify-center">
                 <Button
                     onClick={() =>
                         navigate(`/experience/view/${experience.id}`)

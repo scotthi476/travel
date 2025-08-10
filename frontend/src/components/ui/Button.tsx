@@ -36,7 +36,7 @@ const Button = ({
     disabled = false,
     children,
 }: Props) => {
-    const baseClass = `px-4 py-2 rounded-sm transition border ${
+    const baseClass = `px-3 py-2 rounded-sm transition border text-xs ${
         disabled
             ? "cursor-not-allowed disabled:text-gray-500 disabled:border-gray-500 disabled:bg-gray-50"
             : "cursor-pointer"
@@ -49,7 +49,7 @@ const Button = ({
             variantClass = "bg-orange-500 text-white hover:bg-orange-600"
             break
         case "secondary":
-            variantClass = "bg-emerald-500 text-white hover:bg-emerald-600"
+            variantClass = "bg-emerald-800 text-white hover:bg-emerald-900"
             break
         case "outline":
             variantClass =

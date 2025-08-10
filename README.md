@@ -19,7 +19,7 @@ brew services start postgresql
 psql -d postgres -c "CREATE USER postgres WITH SUPERUSER PASSWORD 'password123';"
 psql -d postgres -c "CREATE DATABASE travel_app;"
 
-# Setup schema (replace with your actual project path)
+# Setup schema with seed data (replace with your actual project path)
 psql -U postgres -d travel_app -f /full/path/to/your/travel-app/backend/ddl-postgresql.sql
 
 # Example paths:
@@ -47,8 +47,9 @@ npm run dev
 
 ### 5. Test
 
--   Frontend: Open in browser at indicated localhost
+-   Frontend: http://localhost:5173/
 -   Backend health: http://localhost:3001/health
+-   Database should have 100 experiences across 5 cities (San Francisco, Portland, Seattle, San Diego, Los Angeles)
 -   Try creating an experience
 
 ---
@@ -63,6 +64,22 @@ cd backend && npm run dev
 # Terminal 2: Frontend
 cd frontend && npm run dev
 ```
+
+---
+
+## Environment Variables
+
+**Frontend (.env)**:
+
+```bash
+# API Configuration
+VITE_API_URL=http://localhost:3001
+
+# Environment
+VITE_ENV=development
+```
+
+**Backend (.env)**: Use default values from .env.example
 
 ---
 
@@ -83,13 +100,20 @@ psql -d postgres -c "CREATE DATABASE travel_app;"
 **Port conflicts:**
 
 ```bash
-lsof -i :3001  # Check what's using port 3001
+lsof -i :3001  # Check what's using backend port
+lsof -i :5173  # Check what's using frontend port
 ```
 
 **Can't connect to database:**
 
 -   Check `.env` has `DB_PASSWORD=password123`
 -   Try: `psql -U postgres -d travel_app`
+
+**Want to reset database with fresh data:**
+
+```bash
+psql -U postgres -d travel_app -f backend/ddl-postgresql.sql
+```
 
 ---
 
@@ -99,7 +123,7 @@ lsof -i :3001  # Check what's using port 3001
 travel-app/
 ├── backend/          # Express API + PostgreSQL
 │   ├── .env.example  # Copy to .env
-│   └── ddl-postgresql.sql       # Database schema
+│   └── ddl-postgresql.sql       # Database schema + seed data
 └── frontend/         # React + Vite
     └── .env.example  # Copy to .env
 ```

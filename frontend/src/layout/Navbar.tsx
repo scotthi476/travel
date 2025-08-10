@@ -7,7 +7,7 @@ import { useAuth } from "../contexts/AuthContext"
 import { signOut } from "firebase/auth"
 import { auth } from "../config/firebase"
 import SearchBar from "../components/forms/SearchBar"
-import Logo from "../../public/logo.png"
+import Logo from "../assets/logo.png"
 
 const Navbar = () => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState(false)

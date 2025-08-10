@@ -10,7 +10,7 @@
  */
 
 import type { ReactNode } from "react"
-import Logo from "../../public/logo.png"
+import Logo from "../assets/logo.png"
 
 type Props = {
     // Card content
