@@ -33,8 +33,8 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: "Internal server error" })
 })
 
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 10000
 
-app.listen(port, () => {
-    console.log(`Using port ${port}`)
+app.listen(port, "0.0.0.0", () => {
+    console.log(`Server running on port ${port}`)
 })
