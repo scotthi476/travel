@@ -13,6 +13,7 @@ import { TripProvider } from "./contexts"
 import { AuthProvider } from "./contexts/AuthContext"
 import TripPage from "./pages/TripPage"
 import ExperienceViewPage from "./pages/ExperienceViewPage"
+import SearchResultsPage from "./pages/SearchResultsPage"
 
 function App() {
     return (
@@ -60,6 +61,10 @@ function App() {
                                             <TripPage />
                                         </ProtectedRoute>
                                     }
+                                />
+                                <Route
+                                    path="/search"
+                                    element={<SearchResultsPage />}
                                 />
                                 <Route path="*" element={<NotFound />} />
                             </Route>

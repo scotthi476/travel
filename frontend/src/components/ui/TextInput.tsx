@@ -37,6 +37,7 @@ type Props = {
     // Optional error message and visual state
     error?: string
     required?: boolean
+    className?: string
 }
 
 const TextInput = ({
@@ -49,6 +50,7 @@ const TextInput = ({
     disabled = false,
     helperText,
     error,
+    className = "",
 }: Props) => {
     const baseClass =
         "w-full p-2 border rounded-sm transition focus:outline-none focus:ring-1"
@@ -69,7 +71,7 @@ const TextInput = ({
                 onChange={onChange}
                 placeholder={placeholder}
                 disabled={disabled}
-                className={`${baseClass} ${errorClass} ${
+                className={`${className} ${baseClass} ${errorClass} ${
                     disabled ? "bg-zinc-100 cursor-not-allowed" : ""
                 }`}
             />
