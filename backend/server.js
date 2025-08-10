@@ -8,6 +8,7 @@ require("dotenv").config()
 const experienceRoutes = require("./routes/experienceRoutes")
 const tripRoutes = require("./routes/tripRoutes")
 const searchRoutes = require("./routes/searchRoutes")
+const ratingRoutes = require("./routes/ratingRoutes")
 
 const app = express()
 
@@ -24,6 +25,7 @@ app.get("/health", (req, res) => {
 app.use("/api/experiences", experienceRoutes)
 app.use("/api/trips", tripRoutes)
 app.use("/api/search", searchRoutes)
+app.use("/api", ratingRoutes)
 
 // Error handling middleware
 app.use((err, req, res, next) => {

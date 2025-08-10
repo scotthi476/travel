@@ -17,7 +17,8 @@ const experienceController = {
                     rating,
                     keywords,
                     is_public as "isPublic",
-                    rating_average as "ratingAverage",
+                    CAST(rating_average AS FLOAT) as "ratingAverage",
+                    community_rating_count as "communityRatingCount",
                     created_at as "createdAt",
                     updated_at as "updatedAt"
                 FROM experiences 
@@ -48,7 +49,8 @@ const experienceController = {
                     rating,
                     keywords,
                     is_public as "isPublic",
-                    rating_average as "ratingAverage",
+                    CAST(rating_average AS FLOAT) as "ratingAverage",
+                    community_rating_count as "communityRatingCount",
                     created_at as "createdAt",
                     updated_at as "updatedAt"
                 FROM experiences 
@@ -104,7 +106,8 @@ const experienceController = {
                     rating,
                     keywords,
                     is_public as "isPublic",
-                    rating_average as "ratingAverage",
+                    CAST(rating_average AS FLOAT) as "ratingAverage",
+                    community_rating_count as "communityRatingCount",
                     created_at as "createdAt",
                     updated_at as "updatedAt"
             `,
@@ -174,7 +177,8 @@ const experienceController = {
                     rating,
                     keywords,
                     is_public as "isPublic",
-                    rating_average as "ratingAverage",
+                    CAST(rating_average AS FLOAT) as "ratingAverage",
+                    community_rating_count as "communityRatingCount",
                     created_at as "createdAt",
                     updated_at as "updatedAt"
             `,
