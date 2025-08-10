@@ -11,8 +11,22 @@ import { useExperienceContext } from "../../contexts"
 import { useCallback, useEffect } from "react"
 import Button from "../../components/ui/Button"
 import { useNavigate } from "react-router-dom"
+import L from "leaflet"
 
 const DEFAULT_CORVALLIS_COORD: [number, number] = [44.564568, -123.262047]
+
+// Fix for default markers in React-Leaflet
+// This resolves the missing marker icon issue by properly configuring Leaflet's default icon
+// Reference: https://react-leaflet.js.org/docs/start-installation/#react
+delete (L.Icon.Default.prototype as any)._getIconUrl
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+    iconUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+    shadowUrl:
+        "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+})
 
 interface Props {
     isCreateMode: boolean
