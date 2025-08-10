@@ -20,8 +20,10 @@ import React from "react"
 type Props = {
     // Unique identifier for input and label association
     id: string
+    // Name attribute for form handling
+    name?: string
     // Descriptive label shown above the input
-    label: string
+    label?: string
     // Input value
     value: string
     // Change event handler
@@ -38,10 +40,12 @@ type Props = {
     error?: string
     required?: boolean
     className?: string
+    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
 const TextInput = ({
     id,
+    name,
     label,
     value,
     onChange,
@@ -66,6 +70,7 @@ const TextInput = ({
             </label>
             <input
                 id={id}
+                name={name}
                 type={type}
                 value={value}
                 onChange={onChange}

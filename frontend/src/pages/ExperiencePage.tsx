@@ -88,6 +88,7 @@ const ExperiencePage = () => {
             // Add the current user's ID to the experience data
             const data = {
                 ...experienceData,
+                imageUrl: "https://picsum.photos/400/300?random=1000",
                 createdBy: currentUser.uid,
             }
             await createItem(data)

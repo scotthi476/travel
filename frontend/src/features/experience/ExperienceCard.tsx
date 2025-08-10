@@ -19,7 +19,7 @@ const ExperienceCard = ({ experience }: Props) => {
     const navigate = useNavigate()
 
     return (
-        <div className="block border rounded-lg overflow-hidden shadow hover:shadow-lg transition px-2 py-4">
+        <div className="block border border-gray-300 rounded-lg overflow-hidden shadow hover:shadow-lg transition p-4">
             <Link to={`/experience/view/${experience.id}`}>
                 {experience.imageUrl && (
                     <img
@@ -37,14 +37,7 @@ const ExperienceCard = ({ experience }: Props) => {
                     </p>
                 </div>
             </Link>
-            <div className="flex gap-2">
-                <Button
-                    onClick={() => setShowTripModal(true)}
-                    variant="outline"
-                >
-                    Add to Trip
-                </Button>
-
+            <div className="flex gap-2 justify-center">
                 <Button
                     onClick={() =>
                         navigate(`/experience/view/${experience.id}`)
@@ -52,6 +45,12 @@ const ExperienceCard = ({ experience }: Props) => {
                     variant="primary"
                 >
                     View
+                </Button>
+                <Button
+                    onClick={() => setShowTripModal(true)}
+                    variant="secondary"
+                >
+                    Add to Trip
                 </Button>
             </div>
 

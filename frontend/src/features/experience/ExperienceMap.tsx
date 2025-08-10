@@ -158,7 +158,7 @@ const ExperienceMap = ({
                 <MapBoundsHandler />
                 {/* Marker components for each experience */}
                 {/* Reference: https://react-leaflet.js.org/docs/api-components/#marker */}
-                {validExperiences
+                {experiences
                     .map((experience) => {
                         const lat = parseCoordinate(experience.latitude)
                         const lng = parseCoordinate(experience.longitude)

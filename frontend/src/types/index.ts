@@ -29,3 +29,17 @@ export interface User extends GenericModel {
     username: string
     isLoggedIn: boolean
 }
+
+export interface PaginationResult<T> {
+    currentData: T[]
+    currentPage: number
+    totalPages: number
+    totalItems: number
+    hasNext: boolean
+    hasPrev: boolean
+    goToPage: (page: number) => void
+    nextPage: () => void
+    prevPage: () => void
+    goToFirst: () => void
+    goToLast: () => void
+}

@@ -22,7 +22,9 @@ const HomePage = () => {
         if (e.createdBy === currentUser?.uid) {
             userExperiences.push(e)
         } else {
-            publicExperiences.push(e)
+            if (e.isPublic) {
+                publicExperiences.push(e)
+            }
         }
     })
 
